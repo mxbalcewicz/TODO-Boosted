@@ -1,5 +1,19 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
+from django.db.models.query import QuerySet
+
+
+class UserQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
+
+class UserManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return UserQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
 
 
 class User(AbstractBaseUser):
