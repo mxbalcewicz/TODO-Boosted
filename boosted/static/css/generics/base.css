@@ -1,0 +1,35 @@
+html,
+body {
+  height: 100%;
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 50%, rgba(60, 0, 88, 1) 100%);
+}
+
+* {
+  font-family: 'Kanit', sans-serif;
+}
+
+p {
+  color: white;
+}
+
+h1, h2 {
+  color: white;
+}
+
+a {
+  color: white;
+}
+
+a {
+  color: white !important;
+}
+
+.flex-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-fill {
+  height: 100%;
+}

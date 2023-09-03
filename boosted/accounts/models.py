@@ -18,8 +18,8 @@ class UserManager(models.Manager):
 
 class User(AbstractBaseUser):
     # User data
-    username = models.CharField()
-    email = models.CharField()
+    username = models.CharField(unique=True)
+    email = models.EmailField(unique=True, max_length=64)
     avatar = models.ImageField(upload_to="avatars/", null=True, blank=False)
 
     # User activity
@@ -31,3 +31,6 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = "username"
+
+    def __str__(self):
+        return f"{self.username}: {self.email}"
