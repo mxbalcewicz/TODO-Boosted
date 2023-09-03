@@ -1,6 +1,8 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import UserManager
 from django.db import models
-from django.db.models.query import QuerySet
+
+# from django.db.models.query import QuerySet
 
 
 class UserQuerySet(models.QuerySet):
@@ -8,12 +10,12 @@ class UserQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
 
-class UserManager(models.Manager):
-    def get_queryset(self) -> QuerySet:
-        return UserQuerySet(self.model, using=self._db)
+# class UserManager(models.Manager):
+#     def get_queryset(self) -> QuerySet:
+#         return UserQuerySet(self.model, using=self._db)
 
-    def active(self):
-        return self.get_queryset().active()
+#     def active(self):
+#         return self.get_queryset().active()
 
 
 class User(AbstractBaseUser):
@@ -31,6 +33,8 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = "username"
+
+    objects = UserManager()
 
     def __str__(self):
         return f"{self.username}: {self.email}"

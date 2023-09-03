@@ -1,4 +1,7 @@
+from typing import Any, Dict
+
 from accounts.forms import UserCreationForm
+from accounts.models import User
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.urls import reverse
@@ -10,7 +13,7 @@ class BoostedLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse("home")
+        return reverse("dashboard")
 
     def form_invalid(self, form):
         messages.error(self.request, "Invalid username or password")
@@ -27,3 +30,8 @@ class RegisterView(FormView):
 
     def get_success_url(self):
         return reverse("login")
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context_data = super(RegisterView, self).get_context_data(**kwargs)
+        context_data["users"] = User.objects.all()
+        return context_data

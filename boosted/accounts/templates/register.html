@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static forms %}
 
 {% block content %}
 
@@ -13,29 +13,18 @@
                         {% csrf_token %}
 						<h2 class="fw-bold mb-2 text-uppercase">Register</h2>
 
-						<div class="form-outline form-floating form-white mb-4">
-                            {{ form.email }}
-							<label class="form-label">Email</label>
-						</div>
-
-                        <div class="form-outline form-floating form-white mb-4">
-							{{ form.username }}
-							<label class="form-label">Username</label>
-						</div>
-
-						<div class="form-outline form-floating form-white mb-4">
-                            {{ form.password1 }}
-							<label class="form-label">Password</label>
-						</div>
-
-                        <div class="form-outline form-floating form-white mb-4">
-                            {{ form.password2 }}
-							<label class="form-label">Confirm Password</label>
-						</div>
+						{% form_field form.email %}
+						{% form_field form.username %}
+						{% form_field form.password1 %}
+						{% form_field form.password2 %}
 					
-						<button class="btn btn-outline-light btn-lg px-5">Submit</button>
+						<button class="btn btn-outline-light px-5">Submit</button>
                     </form>
 					</div>
+
+					{% for user in users %}
+					<p>{{user}}</p>
+					{% endfor %}
 
 					<div>
 						<p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-white-50 fw-bold">Login</a>

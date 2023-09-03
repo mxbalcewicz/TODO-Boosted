@@ -16,8 +16,8 @@ class UserCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for field in self.fields:
-            self.fields[field].widget.attrs["class"] = "form-control"
+        # for field in self.fields:
+        #     self.fields[field].widget.attrs["class"] = "form-control"
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -30,7 +30,6 @@ class UserCreationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data.get("password1"))
-        print(user)
         if commit:
             user.save()
         return user
