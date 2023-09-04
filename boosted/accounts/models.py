@@ -1,8 +1,8 @@
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import UserManager
-from django.db import models
+from datetime import datetime
 
-# from django.db.models.query import QuerySet
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.db import models
 
 
 class UserQuerySet(models.QuerySet):
@@ -10,12 +10,13 @@ class UserQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
 
-# class UserManager(models.Manager):
-#     def get_queryset(self) -> QuerySet:
-#         return UserQuerySet(self.model, using=self._db)
+class UserManager(BaseUserManager):
+    def create_user(self, email, username, password=None):
+        user = self.model(username=username, email=email, date_joined=datetime.now())
 
-#     def active(self):
-#         return self.get_queryset().active()
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
 
 class User(AbstractBaseUser):
