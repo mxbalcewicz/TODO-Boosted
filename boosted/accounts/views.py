@@ -10,7 +10,7 @@ class BoostedLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse("dashboard")
+        return reverse("dashboard:dashboard")
 
     def form_invalid(self, form):
         messages.error(self.request, "Invalid username or password")
