@@ -11,6 +11,12 @@ class UserQuerySet(models.QuerySet):
 
 
 class UserManager(BaseUserManager):
+    def get_queryset(self):
+        return UserQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
     def create_user(self, email, username, password=None):
         user = self.model(username=username, email=email, date_joined=datetime.now())
 

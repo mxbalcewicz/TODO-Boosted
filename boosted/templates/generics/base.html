@@ -19,6 +19,16 @@
 <body>
     <div class="container-fluid flex-container">
 	{% include "navbar.html" %}
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-2" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
         {% block content %}
         {% endblock %}
 	{% include "footer.html" %}
