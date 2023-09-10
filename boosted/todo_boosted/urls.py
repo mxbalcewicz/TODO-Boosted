@@ -1,10 +1,13 @@
 from accounts.views import BoostedLoginView, RegisterView
+from dashboard import urls as dashboard_urls
 from django.urls import include, re_path
-
-# from django.contrib import admin
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    re_path(r"^", include("dashboard.urls")),
-    re_path(r"^login/$", view=BoostedLoginView.as_view(), name="login"),
-    re_path(r"^register/$", view=RegisterView.as_view(), name="register"),
+    re_path(r"^$", view=RedirectView.as_view(url="login"), name="root"),
+    re_path(
+        r"^login/$", view=BoostedLoginView.as_view(), name=BoostedLoginView.view_name
+    ),
+    re_path(r"^register/$", view=RegisterView.as_view(), name=RegisterView.view_name),
+    re_path(r"^dashboard/$", include((dashboard_urls, "dashboard"))),
 ]
