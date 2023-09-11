@@ -20,14 +20,14 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="display: flex; align-items: center;">
-                        {{ user.username }} 
-                        <i class="fas fa-caret-down" style="margin-left: 5px;"></i>
+                    <a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                        <i class="fas fa-caret-down align-self-center" style="margin-left: 5px;"></i>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end backgroud-grey" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
                 </li>
                 {% endif %}
             </ul>
