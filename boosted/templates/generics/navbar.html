@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><h1>BOOSTED</h1></a>
+        <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}"><h1>BOOSTED</h1></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,10 +10,7 @@
                     <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/mxbalcewicz/TODO-Boosted">Github</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="https://github.com/mxbalcewicz/TODO-Boosted" target="_blank">Github</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
@@ -25,7 +22,7 @@
                         <i class="fas fa-caret-down align-self-center" style="margin-left: 5px;"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end backgroud-grey" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:settings' pk=user.pk %}">Settings</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                 </li>

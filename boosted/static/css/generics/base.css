@@ -5,6 +5,12 @@ body {
 }
 
 * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
   font-family: 'Kanit', sans-serif;
 }
 
@@ -62,6 +68,10 @@ a {
   transition: transform .3s ease-in-out;
 }
 
+.dropdown-item:hover {
+  background-color: rgb(32, 32, 32);
+}
+
 .nav-link:hover::before {
   transform-origin: left;
   transform: scaleX(1);
@@ -86,4 +96,16 @@ a {
   background-color: #d1ecf1;
   border-color: #bee5eb;
   color: #0c5460;
+}
+
+.bento-box {
+  background-color: #1d1c20;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
 }

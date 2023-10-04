@@ -1,3 +1,4 @@
+from accounts import urls as accounts_urls
 from accounts.views import BoostedLoginView, LogoutView, RegisterView
 from dashboard import urls as dashboard_urls
 from django.urls import include, re_path
@@ -10,5 +11,6 @@ urlpatterns = [
     ),
     re_path(r"^logout/$", view=LogoutView.as_view(), name=LogoutView.view_name),
     re_path(r"^register/$", view=RegisterView.as_view(), name=RegisterView.view_name),
-    re_path(r"^dashboard/$", include((dashboard_urls, "dashboard"))),
+    re_path(r"^dashboard/", include((dashboard_urls, "dashboard"))),
+    re_path(r"^accounts/", include((accounts_urls, "accounts"))),
 ]

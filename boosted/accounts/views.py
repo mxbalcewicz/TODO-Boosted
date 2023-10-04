@@ -1,15 +1,12 @@
 from accounts.forms import UserCreationForm
+from accounts.models import User
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import FormView, View
+from django.views.generic import DetailView, FormView, View
 from tools.views import BoostedAbstractView
-
-
-class AccountsGenericView(BoostedAbstractView):
-    app_name = "accounts"
 
 
 class BoostedLoginView(LoginView):
@@ -52,3 +49,10 @@ class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request=request)
         return redirect(BoostedLoginView.view_name)
+
+
+class SettingsView(BoostedAbstractView, DetailView):
+    view_name = "settings"
+    template_name = "settings.html"
+    model = User
+    queryset = User.objects.active()
