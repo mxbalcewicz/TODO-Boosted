@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
-{% load static forms %}
+{% load static forms divs %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-6 mx-auto mt-5">
         <div class="row">
-            <div class="col-4 bento-box test-border">
-                <p>App1</p>
-            </div>
-            <div class="col-4 bento-box test-border">
-                <p>App1</p>
-            </div>
-            <div class="col-4 bento-box test-border">
-                <p>App1</p>
-            </div>
+            {% bento_box title="App1" %}
+            {% bento_box title="App2" %}
+            {% bento_box title="App3" %}
         </div>
     </div>
 </div>

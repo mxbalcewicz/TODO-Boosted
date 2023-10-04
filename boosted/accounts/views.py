@@ -19,7 +19,7 @@ class BoostedLoginView(LoginView):
             # Redirect authenticated users to the dashboard
             from dashboard.views import DashboardView
 
-            return reverse(DashboardView.get_view_name())
+            return reverse(DashboardView.view_name)
         else:
             # If the user is not authenticated, redirect to some other page or URL
             return reverse(self.view_name)
