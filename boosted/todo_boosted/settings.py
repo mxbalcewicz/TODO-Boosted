@@ -139,6 +139,13 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 
+# Media config for uploading images
+
+MEDIA_ROOT = os.path.join(
+    BASE_DIR, "media_root"
+)  # Path to the directory where uploaded files are stored
+MEDIA_URL = "/media/"  # URL for serving media files
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

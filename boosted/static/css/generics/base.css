@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   background: radial-gradient(circle, rgba(2, 0, 36, 1) 50%, rgb(48, 0, 70) 100%);
+  color: #a0a0a0;
 }
 
 * {

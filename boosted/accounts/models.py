@@ -29,7 +29,7 @@ class User(AbstractBaseUser):
     # User data
     username = models.CharField(unique=True)
     email = models.EmailField(unique=True, max_length=64)
-    avatar = models.ImageField(upload_to="avatars/", null=True, blank=False)
+    avatar = models.ImageField(upload_to="avatars/", default="morty.jpg")
 
     # User activity
     date_joined = models.DateTimeField(auto_now_add=True)

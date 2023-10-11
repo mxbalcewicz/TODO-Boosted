@@ -7,3 +7,8 @@ class BoostedAbstractView(View):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(BoostedAbstractView, self).dispatch(*args, **kwargs)
+
+    # Used in url routing in reverse method
+    @classmethod
+    def get_view_name(cls):
+        return f"{cls.app_name}:{cls.view_name}"
