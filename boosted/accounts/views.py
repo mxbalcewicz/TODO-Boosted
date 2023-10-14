@@ -1,4 +1,4 @@
-from accounts.forms import UserCreationForm
+from accounts.forms import UserCreationForm, UserSettingsForm
 from accounts.models import User
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -56,3 +56,9 @@ class SettingsView(BoostedAbstractView, DetailView):
     template_name = "settings.html"
     model = User
     queryset = User.objects.active()
+
+
+class SettingsEditView(BoostedAbstractView, FormView):
+    view_name = "settings_edit"
+    template_name = "settings_edit.html"
+    form_class = UserSettingsForm

@@ -73,6 +73,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "dashboard.context_processors.global_variables_loader",
             ],
         },
     },
@@ -150,3 +151,8 @@ MEDIA_URL = "/media/"  # URL for serving media files
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Global variables for context processor in dashboard app
+VERSION = "v0.0.1"
+GITHUB_REPO = "https://github.com/mxbalcewicz/TODO-Boosted"
