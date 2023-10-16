@@ -5,8 +5,12 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import DetailView, FormView, View
+from django.views.generic import DetailView, FormView, UpdateView, View
 from tools.views import BoostedAbstractView
+
+
+class AccountsGenericView(BoostedAbstractView):
+    app_name = "accounts"
 
 
 class BoostedLoginView(LoginView):
@@ -51,14 +55,15 @@ class LogoutView(View):
         return redirect(BoostedLoginView.view_name)
 
 
-class SettingsView(BoostedAbstractView, DetailView):
+class SettingsView(AccountsGenericView, DetailView):
     view_name = "settings"
     template_name = "settings.html"
     model = User
     queryset = User.objects.active()
 
 
-class SettingsEditView(BoostedAbstractView, FormView):
+class SettingsEditView(AccountsGenericView, UpdateView):
     view_name = "settings_edit"
     template_name = "settings_edit.html"
     form_class = UserSettingsForm
+    queryset = User.objects.active()
