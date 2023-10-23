@@ -12,8 +12,8 @@
 					<form method="POST">
 						{% csrf_token %}
 						<h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-						{% form_field form.username %}
-						{% form_field form.password %}
+						{% form_input_field form.username %}
+						{% form_input_field form.password %}
 						<button class="btn btn-outline-light px-5" type="submit">Login</button>
 					</div>
 					</form>

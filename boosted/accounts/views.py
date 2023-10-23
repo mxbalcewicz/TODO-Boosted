@@ -29,7 +29,7 @@ class BoostedLoginView(LoginView):
             return reverse(self.view_name)
 
     def form_invalid(self, form):
-        messages.error(self.request, "Invalid username or password")
+        messages.error(self.request, "Invalid username or password.")
         return self.render_to_response(self.get_context_data(form=form))
 
 
@@ -59,11 +59,11 @@ class SettingsView(AccountsGenericView, DetailView):
     view_name = "settings"
     template_name = "settings.html"
     model = User
-    queryset = User.objects.active()
+    queryset = User.objects.all()
 
 
 class SettingsEditView(AccountsGenericView, UpdateView):
     view_name = "settings_edit"
     template_name = "settings_edit.html"
     form_class = UserSettingsForm
-    queryset = User.objects.active()
+    queryset = User.objects.all()

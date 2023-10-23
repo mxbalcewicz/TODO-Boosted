@@ -63,3 +63,9 @@ class UserSettingsForm(forms.ModelForm):
             ):
                 del cleaned_data[field]
         return cleaned_data
+
+    def save(self, commit=True):
+        instance = super(UserSettingsForm, self).save(commit=False)
+        if commit:
+            instance.save()
+        return instance

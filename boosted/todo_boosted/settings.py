@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # DEBUG = bool(os.environ.get("DEBUG", default=0))
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1" "[::1]"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "192.168.0.170", "[::1]"]
 
 # Application definition
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    # "crispy_forms",
+    # "crispy_bootstrap5",
     "accounts",
     "dashboard",
 ]
@@ -120,6 +122,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 # Login settings
 LOGIN_REDIRECT_URL = "/login"
+LOGIN_URL = "/login"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -152,6 +155,11 @@ MEDIA_URL = "/media/"  # URL for serving media files
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# Crispy forms for Bootstrap 5
+# CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+# CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Global variables for context processor in dashboard app
 VERSION = "v0.0.1"

@@ -13,10 +13,10 @@
                         {% csrf_token %}
 						<h2 class="fw-bold mb-2 text-uppercase">Register</h2>
 
-						{% form_field form.email %}
-						{% form_field form.username %}
-						{% form_field form.password %}
-						{% form_field form.password2 %}
+						{% form_input_field form.email %}
+						{% form_input_field form.username %}
+						{% form_input_field form.password %}
+						{% form_input_field form.password2 %}
 					
 						<button class="btn btn-outline-light px-5">Submit</button>
                     </form>

@@ -1,18 +1,20 @@
-from django import forms, template
+from django import template
 
 register = template.Library()
 
 
-@register.inclusion_tag("form_field.html")
-def form_field(field):
-    is_checkbox = (
-        True
-        if isinstance(
-            field.field.widget, (forms.CheckboxInput, forms.CheckboxSelectMultiple)
-        )
-        else False
-    )
-    if not is_checkbox:
-        field.field.widget.attrs.update({"class": "form-control"})
+@register.inclusion_tag("form_input_field.html")
+def form_input_field(field):
+    field.field.widget.attrs.update({"class": "form-control"})
+    return {"field": field}
 
-    return {"field": field, "is_checkbox": is_checkbox}
+
+@register.inclusion_tag("form_checkbox_field.html")
+def form_checkbox_field(field):
+    return {"field": field}
+
+
+@register.inclusion_tag("file_input.html")
+def form_file_input_field(field, accepted_types=None):
+    field.field.widget.attrs.update({"class": "form-control"})
+    return {"field": field, "accepted_types": accepted_types}

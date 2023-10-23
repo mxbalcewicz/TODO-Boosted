@@ -13,13 +13,14 @@
                 {% csrf_token %}
                 <div class="col bento-box">
                     <div class="row align-items-center">
-                        <div class="col">
-                            {% form_field form.avatar %}
-                            {% form_field form.username %} 
-                            {% form_field form.email %} 
-                            {% form_field form.is_active %}
-                            {% form_field form.password %}
-                            {% form_field form.password2 %}
+                    <div class="col">
+                    <div class="mb-3">
+                            {% form_file_input_field form.avatar %}
+                            {% form_input_field form.username %} 
+                            {% form_input_field form.email %} 
+                            {% form_checkbox_field form.is_active %}
+                            {% form_input_field form.password %}
+                            {% form_input_field form.password2 %}
                             <button class="btn btn-outline-light px-5">Save</button>
                         </div>
                     </div>
