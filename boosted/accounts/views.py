@@ -2,6 +2,7 @@ from accounts.forms import UserCreationForm, UserSettingsForm
 from accounts.models import User
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -13,10 +14,16 @@ class AccountsGenericView(BoostedAbstractView):
     app_name = "accounts"
 
 
+class LoginForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        return None
+
+
 class BoostedLoginView(LoginView):
     view_name = "login"
     template_name = "login.html"
     redirect_authenticated_user = True
+    authentication_form = LoginForm
 
     def get_success_url(self):
         if self.request.user.is_authenticated:
@@ -29,7 +36,8 @@ class BoostedLoginView(LoginView):
             return reverse(self.view_name)
 
     def form_invalid(self, form):
-        messages.error(self.request, "Invalid username or password.")
+        for err in form.error_messages.values():
+            messages.error(self.request, err)
         return self.render_to_response(self.get_context_data(form=form))
 
 

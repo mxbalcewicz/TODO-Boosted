@@ -11,7 +11,14 @@ def button(
     pk: int = None,
     size: str = "lg",
     color: str = "dark-slate-blue",
+    extra_classes: str = None,
 ):
     if href:
         href = reverse(href, kwargs={"pk": pk})
-    return {"title": title, "href": href, "size": size, "color": color}
+    return {
+        "title": title,
+        "href": href,
+        "size": size,
+        "color": color,
+        "extra_classes": extra_classes,
+    }

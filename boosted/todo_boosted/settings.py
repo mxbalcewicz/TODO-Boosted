@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    # "crispy_forms",
-    # "crispy_bootstrap5",
     "accounts",
     "dashboard",
 ]
@@ -118,6 +116,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "accounts.User"
+
+# Authentication backend
+
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.AllowAllUsersModelBackend"]
 
 
 # Login settings

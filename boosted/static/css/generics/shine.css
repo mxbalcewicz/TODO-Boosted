@@ -1,0 +1,33 @@
+.glass-shine-effect {
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(107, 107, 107, 0.37);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 200ms ease;
+    overflow: hidden;
+}
+
+.glass-shine-effect:before {
+    content: "";
+    position: absolute;
+    height: 150%;
+    width: 50px;
+    transform: rotate(30deg);
+    background-color: rgba(255, 255, 255, 0.2);
+    left: -100px;
+}
+
+.glass-shine-effect:hover {
+    transform: scale(1.1);
+}
+
+.glass-shine-effect:hover:before {
+    transition: left 500ms ease;
+    left: 120%;
+}

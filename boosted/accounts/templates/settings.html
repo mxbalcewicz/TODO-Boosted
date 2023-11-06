@@ -7,59 +7,64 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6 mx-auto mt-5">
+    <div class="col-md-4 mx-auto mt-5">
         <div class="row">
-            <div class="col bento-box">
+            <div class="bento-box">
                 <div class="row">
-                    <div class="col align-self-center">
-                        Avatar
+                    <div class="col">
+                        <div class="align-self-center">
+                            Avatar
+                        </div>
+                        <div>
+                            <div style="max-width: 120px; max-height: 120px;">
+                                {% if user.avatar %}
+                                    <img src="{{ user.avatar.url }}" alt="User Avatar" class="img-thumbnail">
+                                {% else %}
+                                    <img src="{% static 'images/blank-profile.webp' %}" alt="Default Avatar" class="img-thumbnail">
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     <div class="col">
-                        <div style="max-width: 120px; max-height: 120px;">
-                            {% if user.avatar %}
-                                <img src="{{ user.avatar.url }}" alt="User Avatar" class="img-thumbnail">
-                            {% else %}
-                                <img src="{% static 'images/blank-profile.webp' %}" alt="Default Avatar" class="img-thumbnail">
-                            {% endif %}
+                        <div class="row">
+                            <div class="col text-end">
+                                Username
+                            </div>
+                            <div class="col">
+                                {{ user.username }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Email
+                            </div>
+                            <div class="col">
+                                {{ user.email }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Account status
+                            </div>
+                            <div class="col {% if user.is_active %} green {% else %} red {% endif %}}}">
+                                {{ user.is_active|yesno:"active,closed"|title }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Joined
+                            </div>
+                            <div class="col">
+                                {{ user.date_joined|date }}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col bento-box">
                 <div class="row">
-                    <div class="col text-end">
-                        Username
-                    </div>
-                    <div class="col">
-                        {{ user.username }}
+                    <div class="col-6">
+                    {% button href='accounts:settings_edit' pk=user.pk title="Edit" color="dark-slate-blue" %}
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col text-end">
-                        Email
-                    </div>
-                    <div class="col">
-                        {{ user.email }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-end">
-                        Account status
-                    </div>
-                    <div class="col {% if user.is_active %} green {% else %} red {% endif %}}}">
-                        {{ user.is_active|yesno:"active,closed"|title }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-end">
-                        Joined
-                    </div>
-                    <div class="col">
-                        {{ user.date_joined|date }}
-                    </div>
-                </div>
-
-                {% button href='accounts:settings_edit' pk=user.pk title="Edit" color="dark-slate-blue" %}
             </div>
         </div>
     </div>

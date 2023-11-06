@@ -66,6 +66,13 @@ class UserSettingsForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(UserSettingsForm, self).save(commit=False)
+        password = self.cleaned_data.get("password")
+
+        if password:
+            # Set the user's password if a new one is provided
+            instance.set_password(password)
+
         if commit:
             instance.save()
+
         return instance

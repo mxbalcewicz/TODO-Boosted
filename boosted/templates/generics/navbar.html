@@ -12,9 +12,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ github_url }}" target="_blank">Github</a>
                 </li>
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li> {% endcomment %}
+                {% if user.is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link green" href="#"><span class="gold">Admin panel</span></a>
+                </li>
+                {% endif %}
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
