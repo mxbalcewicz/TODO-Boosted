@@ -27,5 +27,9 @@
 }
 
 .bg-dark-slate-blue {
-    background-color: darkslateblue
+    background-color: darkslateblue;
+}
+
+.bg-dark-slate-blue:hover {
+    background-color: rgb(43, 37, 83);
 }

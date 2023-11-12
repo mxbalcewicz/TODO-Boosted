@@ -10,6 +10,9 @@ class UserQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
+    def inactive(self):
+        return self.filter(is_active=False)
+
 
 class UserManager(BaseUserManager):
     def get_queryset(self):
@@ -17,6 +20,9 @@ class UserManager(BaseUserManager):
 
     def active(self):
         return self.get_queryset().active()
+
+    def inactive(self):
+        return self.get_queryset().inactive()
 
     def create_user(self, email, username, password=None):
         user = self.model(username=username, email=email, date_joined=datetime.now())
@@ -35,6 +41,7 @@ class User(AbstractBaseUser):
     # User activity
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    delete_date = models.DateField(null=True, blank=True)
 
     # User permissions
     is_admin = models.BooleanField(default=False)

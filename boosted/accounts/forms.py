@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from accounts.models import User
 from django import forms
 from django.core.exceptions import ValidationError
@@ -66,11 +68,14 @@ class UserSettingsForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super(UserSettingsForm, self).save(commit=False)
+        instance: User
         password = self.cleaned_data.get("password")
 
         if password:
             # Set the user's password if a new one is provided
             instance.set_password(password)
+        if not instance.is_active:
+            instance.delete_date = datetime.today() + timedelta(weeks=1)
 
         if commit:
             instance.save()
