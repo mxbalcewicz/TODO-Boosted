@@ -7,3 +7,4 @@ class UsersManagementListView(ListView):
     view_name = "users_management_list_view"
     model = User
     queryset = User.objects.all()
+    context_object_name = "users"
