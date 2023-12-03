@@ -21,7 +21,8 @@
                             {% form_checkbox_field form.is_active %}
                             {% form_input_field form.password %}
                             {% form_input_field form.password2 %}
-                            <button class="btn btn-outline-light px-5">Save</button>
+                            {% comment %} TODO: Adjust css to match the look of <a> styling {% endcomment %}
+                            {% button title="Save" color="dark-slate-blue" %}
                         </div>
                     </div>
                 </div>

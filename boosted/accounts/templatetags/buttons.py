@@ -6,8 +6,8 @@ register = template.Library()
 
 @register.inclusion_tag("button.html")
 def button(
-    title: str = "",
-    href: str = "#",
+    title: str = "Save",
+    href: str = None,
     pk: int = None,
     size: str = "lg",
     color: str = "dark-slate-blue",

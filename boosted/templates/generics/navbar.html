@@ -14,7 +14,7 @@
                 </li>
                 {% if user.is_admin %}
                 <li class="nav-item">
-                    <a class="nav-link green" href="#"><span class="gold">Admin panel</span></a>
+                    <a class="nav-link green" href="{% url 'admin_panel:users_management_list_view' %}"><span class="gold">Admin panel</span></a>
                 </li>
                 {% endif %}
                 {% if user.is_authenticated %}

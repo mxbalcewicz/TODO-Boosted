@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static forms divs %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/generics/shine.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row table-head">
+        <div class="col-md-4">
+             Heading 1
+        </div>
+        <div class="col-md-4">
+            Heading 2
+        </div>
+          <div class="col-md-4">
+           Heading 3
+        </div>
+    </div>
+    <div class="row striped">
+       <div class="col-md-4">
+            One
+        </div>
+         <div class="col-md-4">
+            Two
+        </div>
+       <div class="col-md-4">
+            Three
+        </div>
+    </div>
+    <div class="row striped">
+          <div class="col-md-4">
+            Four
+        </div>
+         <div class="col-md-4">
+            Five
+        </div>
+    <div class="col-md-4">
+            Six
+        </div>
+    </div>
+    <div class="row striped">
+        <div class="col-md-4">
+            Seven
+        </div>
+        <div class="col-md-4">
+            Eight
+        </div>
+        <div class="col-md-4">
+            Nine
+        </div>
+    </div>
+</div>
+{% endblock content %}
