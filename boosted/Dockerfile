@@ -22,5 +22,8 @@ COPY ./entrypoint.sh /usr/src/boosted/entrypoint.sh
 # copy project
 COPY . /usr/src/boosted/
 
+# chmod entrypoint.sh issue on linux
+RUN chmod +x /usr/src/boosted/entrypoint.sh
+
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/boosted/entrypoint.sh"]
