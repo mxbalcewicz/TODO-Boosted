@@ -11,6 +11,6 @@ then
     echo "PostgreSQL connected"
 fi
 
-python manage.py migrate
+python3 manage.py migrate
 
 exec "$@"

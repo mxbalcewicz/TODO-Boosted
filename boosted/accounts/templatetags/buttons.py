@@ -9,7 +9,7 @@ def button(
     title: str = "Save",
     href: str = None,
     pk: int = None,
-    size: str = "lg",
+    size: str = "sm",
     color: str = "dark-slate-blue",
     extra_classes: str = None,
 ):

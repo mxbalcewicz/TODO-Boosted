@@ -29,7 +29,7 @@
 
     <div class="container-fluid flex-container">
 	{% include "navbar.html" %}
-        <div class="row justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center system-messages">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 {% for message in messages %}
                 {% dismissible_alert message=message %}

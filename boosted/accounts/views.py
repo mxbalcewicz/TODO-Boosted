@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import DetailView, FormView, UpdateView, View
+from django.views.generic import DetailView, FormView, UpdateView, View, ListView
 from tools.views import BoostedAbstractView
 
 
@@ -75,3 +75,11 @@ class SettingsEditView(AccountsGenericView, UpdateView):
     template_name = "settings_edit.html"
     form_class = UserSettingsForm
     queryset = User.objects.all()
+
+
+class UsersManagementListView(ListView):
+    template_name = "management_users_list.html"
+    view_name = "users_management_list_view"
+    model = User
+    queryset = User.objects.all()
+    context_object_name = "users"

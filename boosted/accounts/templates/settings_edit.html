@@ -11,18 +11,18 @@
         <div class="row">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="col bento-box">
+                <div class="col">
                     <div class="row align-items-center">
-                    <div class="col">
-                    <div class="mb-3">
-                            {% form_file_input_field form.avatar %}
-                            {% form_input_field form.username %}
-                            {% form_input_field form.email %}
-                            {% form_checkbox_field form.is_active %}
-                            {% form_input_field form.password %}
-                            {% form_input_field form.password2 %}
-                            {% comment %} TODO: Adjust css to match the look of <a> styling {% endcomment %}
-                            {% button title="Save" color="dark-slate-blue" %}
+                        <div class="col">
+                            <div class="mb-3">
+                                {% form_file_input_field form.avatar %}
+                                {% form_input_field form.username %}
+                                {% form_input_field form.email %}
+                                {% form_checkbox_field form.is_active %}
+                                {% form_input_field form.password %}
+                                {% form_input_field form.password2 %}
+                                {% button title="Save" size="lg" %}
+                            </div>
                         </div>
                     </div>
                 </div>
