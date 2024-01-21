@@ -22,8 +22,8 @@ COPY ./entrypoint.sh /usr/src/boosted/entrypoint.sh
 # Copy project
 COPY . /usr/src/boosted/
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# chmod entrypoint.sh issue on linux
+RUN chmod +x /usr/src/boosted/entrypoint.sh
 
 # Run entrypoint.sh
 ENTRYPOINT ["/usr/src/boosted/entrypoint.sh"]
