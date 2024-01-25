@@ -131,3 +131,11 @@ ul {
 button.btn {
   color: white;
 }
+
+caption.styled {
+  caption-side: top !important;
+  text-align: center;
+  color: white;
+  border-top: 5px;
+  background-color: #1d1c20;
+}

@@ -14,7 +14,13 @@
                 </li>
                 {% if user.is_admin %}
                 <li class="nav-item">
-                    <a class="nav-link green" href="{% url 'accounts:users_management_list_view' %}"><span class="gold">Admin panel</span></a>
+                    <a class="nav-link" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="gold">Admin panel</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end backgroud-grey" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{% url 'accounts:users_management_list_view' %}">Users management</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:groups_management_list_view' %}">Groups management</a></li>
+                    </ul>
                 </li>
                 {% endif %}
                 {% if user.is_authenticated %}

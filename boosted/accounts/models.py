@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import BaseUserManager, Group, PermissionsMixin
 from django.db import models
 from django.urls import reverse
 
@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     # User data
     username = models.CharField(unique=True)
     email = models.EmailField(unique=True, max_length=64)
@@ -58,3 +58,7 @@ class User(AbstractBaseUser):
         from accounts.views import SettingsView
 
         return reverse(SettingsView.get_view_name(), kwargs={"pk": self.pk})
+
+
+class BoostedGroup(Group):
+    active = models.BooleanField(default=True)

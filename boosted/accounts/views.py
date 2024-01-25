@@ -1,5 +1,5 @@
 from accounts.forms import UserCreationForm, UserSettingsForm
-from accounts.models import User
+from accounts.models import User, BoostedGroup
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
         return None
 
 
-class BoostedLoginView(LoginView):
+class BoostedLoginView(BoostedAbstractView, LoginView):
     view_name = "login"
     template_name = "login.html"
     redirect_authenticated_user = True
@@ -53,6 +53,11 @@ class RegisterView(FormView):
 
     def get_success_url(self):
         return reverse(BoostedLoginView.view_name)
+    
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(BoostedLoginView.view_name)
+        return super().dispatch(*args, **kwargs)
 
 
 class LogoutView(View):
@@ -83,3 +88,11 @@ class UsersManagementListView(ListView):
     model = User
     queryset = User.objects.all()
     context_object_name = "users"
+
+
+class GroupsManagementListView(ListView):
+    template_name = "management_groups_list.html"
+    view_name = "groups_management_list_view"
+    model = BoostedGroup
+    queryset = BoostedGroup.objects.all()
+    context_object_name = "groups"

@@ -1,7 +1,8 @@
 from accounts.views import (
     SettingsEditView,
     SettingsView,
-    UsersManagementListView
+    UsersManagementListView,
+    GroupsManagementListView
 )
 from django.urls import re_path
 
@@ -20,5 +21,10 @@ urlpatterns = [
         r"users_list",
         UsersManagementListView.as_view(),
         name=UsersManagementListView.view_name,
+    ),
+    re_path(
+        r"groups_list",
+        GroupsManagementListView.as_view(),
+        name=GroupsManagementListView.view_name,
     ),
 ]
