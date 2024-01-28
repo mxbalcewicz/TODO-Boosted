@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="{% static 'images/favicon-32x32.png' %}">
     <title>BOOSTED</title>
-  
+
     {% comment %} CSS {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/generics/base.css' %}">
@@ -28,7 +28,7 @@
     <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
 
     <div class="container-fluid flex-container">
-	{% include "navbar.html" %}
+	    {% include "navbar.html" %}
         <div class="row justify-content-center align-items-center system-messages">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 {% for message in messages %}
@@ -39,7 +39,7 @@
 
         {% block content %}
         {% endblock %}
-	{% include "footer.html" %}
+	    {% include "footer.html" %}
     </div>
 
     <!-- JS -->

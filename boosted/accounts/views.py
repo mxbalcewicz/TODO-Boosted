@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
         return None
 
 
-class BoostedLoginView(BoostedAbstractView, LoginView):
+class BoostedLoginView(LoginView):
     view_name = "login"
     template_name = "login.html"
     redirect_authenticated_user = True
@@ -80,6 +80,11 @@ class SettingsEditView(AccountsGenericView, UpdateView):
     template_name = "settings_edit.html"
     form_class = UserSettingsForm
     queryset = User.objects.all()
+
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.pk:
+            return redirect(BoostedLoginView.view_name)
+        return super().dispatch(*args, **kwargs)
 
 
 class UsersManagementListView(ListView):

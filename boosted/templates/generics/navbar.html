@@ -1,41 +1,43 @@
-<nav class="navbar navbar-expand">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}"><h1 class="bold-hover">BOOSTED</h1></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ github_url }}" target="_blank">Github</a>
-                </li>
-                {% if user.is_admin %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="gold">Admin panel</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end backgroud-grey" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{% url 'accounts:users_management_list_view' %}">Users management</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:groups_management_list_view' %}">Groups management</a></li>
-                    </ul>
-                </li>
-                {% endif %}
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }}
-                        <i class="fas fa-caret-down align-self-center" style="margin-left: 5px;"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end backgroud-grey" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{% url 'accounts:settings' pk=user.pk %}">Settings</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}"><h1 class="bold-hover">BOOSTED</h1></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ github_url }}" target="_blank">Github</a>
+        </li>
+        {% if user.is_admin %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="gold">Admin panel</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{% url 'accounts:users_management_list_view' %}">Users management</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:groups_management_list_view' %}">Groups management</a></li>
+          </ul>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ user.username }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{% url 'accounts:settings' pk=user.pk %}">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </li>
+        {% endif %}
+      </ul>
     </div>
+  </div>
 </nav>
