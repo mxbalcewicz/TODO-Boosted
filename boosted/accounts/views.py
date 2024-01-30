@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, FormView, UpdateView, View, ListView
 from tools.views import BoostedAbstractView
-
+from accounts.forms import GroupUpdateForm
 
 class AccountsGenericView(BoostedAbstractView):
     app_name = "accounts"
@@ -17,6 +17,14 @@ class AccountsGenericView(BoostedAbstractView):
 class LoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         return None
+
+
+class SelfUserRestrictedView:
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_admin:
+            if self.request.user.pk == int(kwargs.get("pk")):
+                redirect(BoostedLoginView.view_name)
+        return super().dispatch(*args, **kwargs)
 
 
 class BoostedLoginView(LoginView):
@@ -68,36 +76,47 @@ class LogoutView(View):
         return redirect(BoostedLoginView.view_name)
 
 
-class SettingsView(AccountsGenericView, DetailView):
+class SettingsView(SelfUserRestrictedView, AccountsGenericView, DetailView):
     view_name = "settings"
     template_name = "settings.html"
     model = User
     queryset = User.objects.all()
 
 
-class SettingsEditView(AccountsGenericView, UpdateView):
+class SettingsEditView(SelfUserRestrictedView, AccountsGenericView, UpdateView):
     view_name = "settings_edit"
     template_name = "settings_edit.html"
     form_class = UserSettingsForm
     queryset = User.objects.all()
 
-    def dispatch(self, *args, **kwargs):
-        if self.request.user.pk:
-            return redirect(BoostedLoginView.view_name)
-        return super().dispatch(*args, **kwargs)
-
 
 class UsersManagementListView(ListView):
-    template_name = "management_users_list.html"
-    view_name = "users_management_list_view"
+    template_name = "user_list.html"
+    view_name = "user_list"
     model = User
     queryset = User.objects.all()
+    ordering = ("pk",)
     context_object_name = "users"
 
 
 class GroupsManagementListView(ListView):
-    template_name = "management_groups_list.html"
-    view_name = "groups_management_list_view"
+    template_name = "group_list.html"
+    view_name = "group_list"
     model = BoostedGroup
     queryset = BoostedGroup.objects.all()
     context_object_name = "groups"
+
+
+class GroupDetailView(DetailView):
+    view_name = "group_detail"
+    template_name = "group_detail.html"
+    model = BoostedGroup
+    context_object_name = "group"
+
+
+class GroupUpdateView(UpdateView):
+    view_name = "group_update"
+    model = BoostedGroup
+    form_class = GroupUpdateForm
+    template_name = "group_update.html"
+    context_object_name = "group"

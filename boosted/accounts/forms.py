@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from accounts.models import User
+from accounts.models import User, BoostedGroup
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -81,3 +81,9 @@ class UserSettingsForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+
+class GroupUpdateForm(forms.ModelForm):
+    class Meta:
+        model = BoostedGroup
+        fields = "__all__"

@@ -13,8 +13,10 @@ def button(
     color: str = "dark-slate-blue",
     extra_classes: str = None,
 ):
-    if href:
+    if pk is not None:
         href = reverse(href, kwargs={"pk": pk})
+    else:
+        href = reverse(href) if href else None
     return {
         "title": title,
         "href": href,

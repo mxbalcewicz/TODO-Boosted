@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}"><h1 class="bold-hover">BOOSTED</h1></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,7 +6,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
         </li>
@@ -14,24 +14,24 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ github_url }}" target="_blank">Github</a>
         </li>
-        {% if user.is_admin %}
+        {% if request.user.is_admin %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="gold">Admin panel</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="{% url 'accounts:users_management_list_view' %}">Users management</a></li>
-            <li><a class="dropdown-item" href="{% url 'accounts:groups_management_list_view' %}">Groups management</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:user_list' %}">Users management</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:group_list' %}">Groups management</a></li>
           </ul>
         </li>
         {% endif %}
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ user.username }}
+            {{ request.user.username }}
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="{% url 'accounts:settings' pk=user.pk %}">Settings</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:settings' pk=request.user.pk %}">Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
           </ul>
