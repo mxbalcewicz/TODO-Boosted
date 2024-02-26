@@ -11,6 +11,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Group name</th>
+                        <th scope="col">Users count</th>
                         <th scope="col">Active</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -20,6 +21,7 @@
                     <tr>
                         <th>{{ group.pk }}</th>
                         <th>{{ group.name }}</th>
+                        <th>{{ group.users_count }}</th>
                         <th>{{ group.active }}</th>
                         <td>
                             {% button title="Edit" href="accounts:group_detail" pk=group.pk %}

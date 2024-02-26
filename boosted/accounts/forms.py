@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
+from typing import Any
 
 from accounts.models import User, BoostedGroup
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Permission
 
 
 class UserCreationForm(forms.ModelForm):
@@ -84,6 +86,29 @@ class UserSettingsForm(forms.ModelForm):
 
 
 class GroupUpdateForm(forms.ModelForm):
+    permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all())
+    users = forms.ModelMultipleChoiceField(queryset=User.objects.all())
+    
     class Meta:
         model = BoostedGroup
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(GroupUpdateForm, self).__init__(*args, **kwargs)
+        self.fields["users"].initial = self.instance.user_set.all()
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.CheckboxInput):
+                continue
+            self.fields[field_name].widget.attrs.update({"class": "form-control"})
+            for chosen_field in ("users", "permissions"):
+                self.fields[chosen_field].widget.attrs.update({"class": "form-control chosen"})
+
+    def save(self, commit=True):
+        instance = super(GroupUpdateForm, self).save(commit=False)
+
+        instance.user_set.set(self.cleaned_data["users"])
+        instance.permissions.set(self.cleaned_data["permissions"])
+
+        if commit:
+            instance.save()
+        return instance

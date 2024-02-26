@@ -44,7 +44,7 @@ class BoostedLoginView(LoginView):
             return reverse(self.view_name)
 
     def form_invalid(self, form):
-        for err in form.error_messages.values():
+        for err in form.errors.values():
             messages.error(self.request, err)
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -90,7 +90,7 @@ class SettingsEditView(SelfUserRestrictedView, AccountsGenericView, UpdateView):
     queryset = User.objects.all()
 
 
-class UsersManagementListView(ListView):
+class UsersManagementListView(ListView, AccountsGenericView):
     template_name = "user_list.html"
     view_name = "user_list"
     model = User
@@ -99,7 +99,7 @@ class UsersManagementListView(ListView):
     context_object_name = "users"
 
 
-class GroupsManagementListView(ListView):
+class GroupsManagementListView(ListView, AccountsGenericView):
     template_name = "group_list.html"
     view_name = "group_list"
     model = BoostedGroup
@@ -107,7 +107,7 @@ class GroupsManagementListView(ListView):
     context_object_name = "groups"
 
 
-class GroupDetailView(DetailView):
+class GroupDetailView(DetailView, AccountsGenericView):
     view_name = "group_detail"
     template_name = "group_detail.html"
     model = BoostedGroup
@@ -120,3 +120,6 @@ class GroupUpdateView(UpdateView):
     form_class = GroupUpdateForm
     template_name = "group_update.html"
     context_object_name = "group"
+
+    def get_success_url(self) -> str:
+        return reverse(GroupDetailView.get_view_name(), args=[self.object.pk])

@@ -63,5 +63,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 class BoostedGroup(Group):
     active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return self.name
+    
+    @property
+    def users_count(self):
+        return self.user_set.count()
+    
+    def get_group_users(self):
+        return " | ".join([user.username for user in self.user_set.all()])
+    
+    def get_group_permissions(self):
+        return " | ".join([perm.name for perm in self.permissions.all()])
