@@ -1,5 +1,5 @@
 from accounts import urls as accounts_urls
-from accounts.views import BoostedLoginView, LogoutView, RegisterView
+from accounts.views.user import BoostedLoginView, LogoutView, RegisterView
 from dashboard import urls as dashboard_urls
 from django.conf import settings
 from django.conf.urls.static import static

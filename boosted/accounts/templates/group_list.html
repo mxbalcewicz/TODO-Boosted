@@ -24,7 +24,7 @@
                         <th>{{ group.users_count }}</th>
                         <th>{{ group.active }}</th>
                         <td>
-                            {% button title="Edit" href="accounts:group_detail" pk=group.pk %}
+                            {% button title="Details" href="accounts:group_detail" pk=group.pk glyph_class="fa-regular fa-rectangle-list" %}
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,12 +1,14 @@
-from accounts.views import (
+from accounts.views.user import (
     SettingsEditView,
     SettingsView,
     UsersManagementListView,
+    UserDetailView,
+    UserUpdateView
+)
+from accounts.views.group import (
     GroupsManagementListView,
     GroupDetailView,
     GroupUpdateView,
-    UserDetailView,
-    UserUpdateView
 )
 from django.urls import re_path
 

@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager, Group, PermissionsMixin
@@ -45,7 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     delete_date = models.DateField(null=True, blank=True)
 
     # User permissions
-    is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = "username"
@@ -81,6 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class BoostedGroup(Group):
     active = models.BooleanField(default=True)
+    can_delete = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("name",)
