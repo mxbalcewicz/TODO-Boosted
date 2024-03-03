@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import DetailView, FormView, UpdateView, View, ListView
 from django.contrib.auth.decorators import permission_required
 from django.utils.decorators import method_decorator
-from accounts import AccountsGenericView
+from accounts.views import AccountsGenericView
 
 
 class SelfUserRestrictedView:

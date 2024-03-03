@@ -1,14 +1,14 @@
 {% load static %}
 
 {% if href %}
-<a href="{{ href }}" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}">
+<a href="{{ href }}" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
     {% if glyph_class %}
     <i class="{{ glyph_class }}"></i>
     {% endif %}
     {{ title }}
 </a>
 {% else %}
-<button type="submit" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}">
+<button type="submit" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
     {% if glyph_class %}
     <i class="{{ glyph_class }}"></i>
     {% endif %}

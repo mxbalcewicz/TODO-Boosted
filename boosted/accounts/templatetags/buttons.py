@@ -12,6 +12,7 @@ def button(
     size: str = "sm",
     color: str = "dark-slate-blue",
     glyph_class: str = None,
+    onclick: str = None,
     extra_classes: str = None,
 ):
     if pk is not None:
@@ -24,5 +25,6 @@ def button(
         "size": size,
         "color": color,
         "glyph_class": glyph_class,
+        "onclick": onclick,
         "extra_classes": extra_classes,
     }

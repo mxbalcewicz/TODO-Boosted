@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Any
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager, Group, PermissionsMixin
@@ -98,3 +97,8 @@ class BoostedGroup(Group):
     
     def get_group_permissions(self):
         return " | ".join([perm.name for perm in self.permissions.all()])
+
+    def delete(self, *args, **kwargs):
+        if self.can_delete:
+            super(BoostedGroup, self).delete(*args, **kwargs)
+        raise ValueError("Cannot delete this model instance")

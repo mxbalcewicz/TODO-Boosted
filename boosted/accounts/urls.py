@@ -9,6 +9,7 @@ from accounts.views.group import (
     GroupsManagementListView,
     GroupDetailView,
     GroupUpdateView,
+    GroupDeleteView
 )
 from django.urls import re_path
 
@@ -42,6 +43,11 @@ urlpatterns = [
         r"group/edit/(?P<pk>\d+)/?$",
         GroupUpdateView.as_view(),
         name=GroupUpdateView.view_name,
+    ),
+    re_path(
+        r"group/delete/(?P<pk>\d+)/?$",
+        GroupDeleteView.as_view(),
+        name=GroupDeleteView.view_name,
     ),
     re_path(
         r"user/(?P<pk>\d+)/?$",
