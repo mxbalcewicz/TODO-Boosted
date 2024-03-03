@@ -5,34 +5,39 @@
 <div class="row align-items-center justify-content-center">
     <div class="col-6 bento-box">
         <div class="title text-center">
-            <h2>{{ group }} group details</h2>
+            <h2>{{ user }} details</h2>
         </div>
         <div class="row my-3 py-3">
             <div class="col text-center white fw-bold">ID</div>
-            <div class="col text-center">{{ group.pk }}</div>
+            <div class="col text-center">{{ user.pk }}</div>
         </div>
 
         <div class="row my-3 py-3">
             <div class="col text-center white fw-bold">Name</div>
-            <div class="col text-center">{{ group.name }}</div>
+            <div class="col text-center">{{ user.username }}</div>
         </div>
 
         <div class="row my-3 py-3">
             <div class="col text-center white fw-bold">Active</div>
-            <div class="col text-center">{{ group.active|yesno|title }}</div>
+            <div class="col text-center">{{ user.active|yesno|title }}</div>
+        </div>
+
+        <div class="row my-3 py-3">
+            <div class="col text-center white fw-bold">Groups</div>
+            <div class="col text-center">{{ user.get_user_groups }}</div>
         </div>
 
         <div class="row my-3 py-3">
             <div class="col text-center white fw-bold">Permissions</div>
-            <div class="col text-center">{{ group.get_group_permissions|default:"-" }}</div>
+            <div class="col text-center">{{ user.get_user_permissions }}</div>
         </div>
         
         <div class="row">
             <div class="col d-flex justify-content-center">
-                {% button title="Back to list" href="accounts:group_list" glyph_class="fa-solid fa-left-long" %}
+                {% button title="Back to list" href="accounts:user_list" glyph_class="fa-solid fa-left-long" %}
             </div>
             <div class="col d-flex justify-content-center">
-                {% button title="Edit" href="accounts:group_update" pk=group.pk glyph_class="fa-solid fa-pen" %}
+                {% button title="Edit" href="accounts:user_update" pk=user.pk glyph_class="fa-solid fa-pen" %}
             </div>
         </div>
     </div>

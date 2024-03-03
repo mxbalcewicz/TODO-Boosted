@@ -14,9 +14,16 @@
     <link rel="stylesheet" href="{% static 'css/generics/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/generics/background-colors.css' %}">
     <link rel="stylesheet" href="{% static 'css/generics/text-colors.css' %}">
+    {% comment %} <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
     {% comment %}  {% endcomment %}
 
     {% comment %} JS {% endcomment %}
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+
     <script src="{% static 'js/jquery/jquery-3.6.0.js' %}"></script>
     <script src="{% static 'js/apps/tools/init_chosen.js' %}"></script>
     <script src="{% static 'js/chosen/chosen.jquery.min.js' %}"></script>
@@ -39,7 +46,7 @@
         <div class="row justify-content-center align-items-center system-messages">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 {% for message in messages %}
-                {% dismissible_alert message=message %}
+                    {% dismissible_alert message=message %}
                 {% endfor %}
             </div>
         </div>

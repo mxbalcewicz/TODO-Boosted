@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager, Group, PermissionsMixin
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import Permission
 
 
 class UserQuerySet(models.QuerySet):
@@ -50,6 +51,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "username"
 
     objects = UserManager()
+
+    @property
+    def is_admin(self):
+        if self.is_superuser:
+            return True
+        return self in BoostedGroup.objects.get(name="Admin").user_set.all()
+    
+    def get_user_groups(self):
+        return " | ".join([group.name for group in self.groups.all()])
+    
+    def get_user_permissions(self):
+        permissions = self.user_permissions.all() | Permission.objects.filter(group__user=self)
+        return " | ".join([permission.name for permission in permissions])
+
+    def has_perm(self, perm: str, obj) -> bool:
+        if self.is_admin:
+            return True
+        return super().has_perm(perm, obj)
 
     def __str__(self):
         return f"{self.username}: {self.email}"

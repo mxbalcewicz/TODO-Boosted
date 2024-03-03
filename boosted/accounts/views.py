@@ -1,28 +1,25 @@
-from accounts.forms import UserCreationForm, UserSettingsForm
+from accounts.forms import UserCreationForm, UserSettingsForm, UserUpdateForm, LoginForm
 from accounts.models import User, BoostedGroup
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import DetailView, FormView, UpdateView, View, ListView
 from tools.views import BoostedAbstractView
 from accounts.forms import GroupUpdateForm
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
+
 
 class AccountsGenericView(BoostedAbstractView):
     app_name = "accounts"
 
 
-class LoginForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        return None
-
-
 class SelfUserRestrictedView:
     def dispatch(self, *args, **kwargs):
         if not self.request.user.is_admin:
-            if self.request.user.pk == int(kwargs.get("pk")):
+            if self.request.user.pk != int(kwargs.get("pk")):
                 redirect(BoostedLoginView.view_name)
         return super().dispatch(*args, **kwargs)
 
@@ -90,6 +87,7 @@ class SettingsEditView(SelfUserRestrictedView, AccountsGenericView, UpdateView):
     queryset = User.objects.all()
 
 
+@method_decorator(permission_required("accounts.view_user"), name="dispatch")
 class UsersManagementListView(ListView, AccountsGenericView):
     template_name = "user_list.html"
     view_name = "user_list"
@@ -99,6 +97,7 @@ class UsersManagementListView(ListView, AccountsGenericView):
     context_object_name = "users"
 
 
+@method_decorator(permission_required("accounts.view_boostedgroup"), name="dispatch")
 class GroupsManagementListView(ListView, AccountsGenericView):
     template_name = "group_list.html"
     view_name = "group_list"
@@ -107,6 +106,7 @@ class GroupsManagementListView(ListView, AccountsGenericView):
     context_object_name = "groups"
 
 
+@method_decorator(permission_required("accounts.change_boostedgroup"), name="dispatch")
 class GroupDetailView(DetailView, AccountsGenericView):
     view_name = "group_detail"
     template_name = "group_detail.html"
@@ -114,6 +114,7 @@ class GroupDetailView(DetailView, AccountsGenericView):
     context_object_name = "group"
 
 
+@method_decorator(permission_required("accounts.change_boostedgroup"), name="dispatch")
 class GroupUpdateView(UpdateView):
     view_name = "group_update"
     model = BoostedGroup
@@ -123,3 +124,23 @@ class GroupUpdateView(UpdateView):
 
     def get_success_url(self) -> str:
         return reverse(GroupDetailView.get_view_name(), args=[self.object.pk])
+
+
+@method_decorator(permission_required("accounts.change_user"), name="dispatch")
+class UserDetailView(DetailView, AccountsGenericView):
+    view_name = "user_detail"
+    template_name = "user_detail.html"
+    model = User
+    context_object_name = "user"
+
+
+@method_decorator(permission_required("accounts.change_user"), name="dispatch")
+class UserUpdateView(UpdateView, AccountsGenericView):
+    view_name = "user_update"
+    model = User
+    form_class = UserUpdateForm
+    template_name = "user_update.html"
+    context_object_name = "user"
+
+    def get_success_url(self) -> str:
+        return reverse(UserDetailView.get_view_name(), args=[self.object.pk])

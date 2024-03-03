@@ -7,3 +7,4 @@ tzdata==2023.3
 django-extensions==3.2.3
 debugpy==1.6.0
 ipython==8.22.1
+fontawesomefree==6.5.1

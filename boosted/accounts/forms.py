@@ -1,11 +1,16 @@
 from datetime import datetime, timedelta
-from typing import Any
 
 from accounts.models import User, BoostedGroup
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import Permission
+from tools.form_tools import update_form_styling
+from django.contrib.auth.forms import AuthenticationForm
 
+
+class LoginForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        return None
+    
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
@@ -49,6 +54,7 @@ class UserSettingsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserSettingsForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
         for field in ("avatar", "password", "password2"):
             self.fields[field].required = False
 
@@ -85,9 +91,17 @@ class UserSettingsForm(forms.ModelForm):
         return instance
 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "groups", "is_active")
+
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
+
+
 class GroupUpdateForm(forms.ModelForm):
-    permissions = forms.ModelMultipleChoiceField(queryset=Permission.objects.all())
-    users = forms.ModelMultipleChoiceField(queryset=User.objects.all())
     
     class Meta:
         model = BoostedGroup
@@ -95,20 +109,4 @@ class GroupUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(GroupUpdateForm, self).__init__(*args, **kwargs)
-        self.fields["users"].initial = self.instance.user_set.all()
-        for field_name, field in self.fields.items():
-            if isinstance(field.widget, forms.CheckboxInput):
-                continue
-            self.fields[field_name].widget.attrs.update({"class": "form-control"})
-            for chosen_field in ("users", "permissions"):
-                self.fields[chosen_field].widget.attrs.update({"class": "form-control chosen"})
-
-    def save(self, commit=True):
-        instance = super(GroupUpdateForm, self).save(commit=False)
-
-        instance.user_set.set(self.cleaned_data["users"])
-        instance.permissions.set(self.cleaned_data["permissions"])
-
-        if commit:
-            instance.save()
-        return instance
+        update_form_styling(self)
