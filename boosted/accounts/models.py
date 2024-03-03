@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.username}: {self.email}"
 
     def get_absolute_url(self):
-        from accounts.views import SettingsView
+        from accounts.views.user import SettingsView
 
         return reverse(SettingsView.get_view_name(), kwargs={"pk": self.pk})
 
