@@ -1,10 +1,14 @@
 from datetime import datetime
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager, Group, PermissionsMixin
+from django.contrib.auth.models import (
+    BaseUserManager,
+    Group,
+    Permission,
+    PermissionsMixin,
+)
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import Permission
 
 
 class UserQuerySet(models.QuerySet):
@@ -56,12 +60,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.is_superuser:
             return True
         return self in BoostedGroup.objects.get(name="Admin").user_set.all()
-    
+
     def get_user_groups(self):
         return " | ".join([group.name for group in self.groups.all()])
-    
+
     def get_user_permissions(self):
-        permissions = self.user_permissions.all() | Permission.objects.filter(group__user=self)
+        permissions = self.user_permissions.all() | Permission.objects.filter(
+            group__user=self
+        )
         return " | ".join([permission.name for permission in permissions])
 
     def has_perm(self, perm: str, obj) -> bool:
@@ -87,18 +93,19 @@ class BoostedGroup(Group):
 
     def __str__(self):
         return self.name
-    
+
     @property
     def users_count(self):
         return self.user_set.count()
-    
+
     def get_group_users(self):
         return " | ".join([user.username for user in self.user_set.all()])
-    
+
     def get_group_permissions(self):
         return " | ".join([perm.name for perm in self.permissions.all()])
 
     def delete(self, *args, **kwargs):
         if self.can_delete:
             super(BoostedGroup, self).delete(*args, **kwargs)
-        raise ValueError("Cannot delete this model instance")
+        else:
+            raise ValueError("Cannot delete this model instance")

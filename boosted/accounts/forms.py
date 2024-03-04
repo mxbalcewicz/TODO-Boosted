@@ -1,16 +1,16 @@
 from datetime import datetime, timedelta
 
-from accounts.models import User, BoostedGroup
+from accounts.models import BoostedGroup, User
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from tools.form_tools import update_form_styling
-from django.contrib.auth.forms import AuthenticationForm
 
 
 class LoginForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         return None
-    
+
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
@@ -101,12 +101,11 @@ class UserUpdateForm(forms.ModelForm):
         update_form_styling(self)
 
 
-class GroupUpdateForm(forms.ModelForm):
-    
+class BoostedGroupForm(forms.ModelForm):
     class Meta:
         model = BoostedGroup
         fields = "__all__"
 
     def __init__(self, *args, **kwargs):
-        super(GroupUpdateForm, self).__init__(*args, **kwargs)
+        super(BoostedGroupForm, self).__init__(*args, **kwargs)
         update_form_styling(self)

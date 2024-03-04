@@ -119,3 +119,8 @@ caption.styled {
 .navbar-toggler-icon {
   color: white;
 }
+
+.sticky {
+  position: sticky;
+  top: 0px;
+}

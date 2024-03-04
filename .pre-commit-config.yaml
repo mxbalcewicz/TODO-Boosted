@@ -9,6 +9,7 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
+        args: ['--multi-line=3', '--trailing-comma']
   - repo: https://github.com/pycqa/flake8
     rev: 5.0.4
     hooks:

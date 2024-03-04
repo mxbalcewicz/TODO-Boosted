@@ -1,15 +1,16 @@
+from accounts.views.group import (
+    GroupCreateView,
+    GroupDeleteView,
+    GroupDetailView,
+    GroupsManagementListView,
+    GroupUpdateView,
+)
 from accounts.views.user import (
     SettingsEditView,
     SettingsView,
-    UsersManagementListView,
     UserDetailView,
-    UserUpdateView
-)
-from accounts.views.group import (
-    GroupsManagementListView,
-    GroupDetailView,
-    GroupUpdateView,
-    GroupDeleteView
+    UsersManagementListView,
+    UserUpdateView,
 )
 from django.urls import re_path
 
@@ -33,6 +34,11 @@ urlpatterns = [
         r"groups_list",
         GroupsManagementListView.as_view(),
         name=GroupsManagementListView.view_name,
+    ),
+    re_path(
+        r"group/new",
+        GroupCreateView.as_view(),
+        name=GroupCreateView.view_name,
     ),
     re_path(
         r"group/(?P<pk>\d+)/?$",
