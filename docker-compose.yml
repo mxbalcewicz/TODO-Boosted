@@ -8,12 +8,17 @@ services:
       - ./boosted/:/usr/src/boosted/
     ports:
       - 8000:8000
+      - 3000:3000
     env_file:
       - ./.env.dev
+    depends_on:
+      - db
   db:
     image: postgres:15
+    ports:
+      - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=summ3r2023

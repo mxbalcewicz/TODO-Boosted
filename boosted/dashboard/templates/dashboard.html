@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static forms divs %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/generics/shine.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 mx-auto mt-5">
+        <div class="row">
+            {% bento_box title="App1" extra_classes="glass-shine-effect" %}
+            {% bento_box title="App2" extra_classes="glass-shine-effect" %}
+            {% bento_box title="App3" extra_classes="glass-shine-effect" %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

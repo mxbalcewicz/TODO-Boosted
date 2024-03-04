@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static forms divs buttons %}
+
+{% block content %}
+<div class="row align-items-center justify-content-center">
+    <div class="col-10">
+        <div class="row">
+            <table class="table rounded-4 overflow-hidden table-responsive table-striped table-dark">
+                <caption class="styled">Groups management panel</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Group name</th>
+                        <th scope="col">Users count</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for group in groups %}
+                    <tr>
+                        <th>{{ group.pk }}</th>
+                        <th>{{ group.name }}</th>
+                        <th>{{ group.users_count }}</th>
+                        <th>{{ group.active }}</th>
+                        <td>
+                            {% button title="Details" href="accounts:group_detail" pk=group.pk glyph_class="fa-regular fa-rectangle-list" %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    {% button title="New group" href="accounts:group_create" glyph_class="fa-solid fa-circle-plus" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

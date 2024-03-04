@@ -1,0 +1,68 @@
+from accounts.views.group import (
+    GroupCreateView,
+    GroupDeleteView,
+    GroupDetailView,
+    GroupsManagementListView,
+    GroupUpdateView,
+)
+from accounts.views.user import (
+    SettingsEditView,
+    SettingsView,
+    UserDetailView,
+    UsersManagementListView,
+    UserUpdateView,
+)
+from django.urls import re_path
+
+urlpatterns = [
+    re_path(
+        r"settings/(?P<pk>\d+)/?$",
+        view=SettingsView.as_view(),
+        name=SettingsView.view_name,
+    ),
+    re_path(
+        r"settings/edit/(?P<pk>\d+)/?$",
+        view=SettingsEditView.as_view(),
+        name=SettingsEditView.view_name,
+    ),
+    re_path(
+        r"users_list",
+        UsersManagementListView.as_view(),
+        name=UsersManagementListView.view_name,
+    ),
+    re_path(
+        r"groups_list",
+        GroupsManagementListView.as_view(),
+        name=GroupsManagementListView.view_name,
+    ),
+    re_path(
+        r"group/new",
+        GroupCreateView.as_view(),
+        name=GroupCreateView.view_name,
+    ),
+    re_path(
+        r"group/(?P<pk>\d+)/?$",
+        GroupDetailView.as_view(),
+        name=GroupDetailView.view_name,
+    ),
+    re_path(
+        r"group/edit/(?P<pk>\d+)/?$",
+        GroupUpdateView.as_view(),
+        name=GroupUpdateView.view_name,
+    ),
+    re_path(
+        r"group/delete/(?P<pk>\d+)/?$",
+        GroupDeleteView.as_view(),
+        name=GroupDeleteView.view_name,
+    ),
+    re_path(
+        r"user/(?P<pk>\d+)/?$",
+        UserDetailView.as_view(),
+        name=UserDetailView.view_name,
+    ),
+    re_path(
+        r"user/edit/(?P<pk>\d+)/?$",
+        UserUpdateView.as_view(),
+        name=UserUpdateView.view_name,
+    ),
+]

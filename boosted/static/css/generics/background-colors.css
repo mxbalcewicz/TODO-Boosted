@@ -1,0 +1,35 @@
+.bg-black {
+    background-color: black;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-blue {
+    background-color: blue;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-yellow {
+    background-color: yellow;
+}
+
+.bg-purple {
+    background-color: purple;
+}
+
+.bg-dark-slate-blue {
+    background-color: darkslateblue;
+}
+
+.bg-dark-slate-blue:hover {
+    background-color: rgb(43, 37, 83);
+}

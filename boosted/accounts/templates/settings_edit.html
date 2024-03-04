@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static forms buttons %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/generics/text-colors.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mx-auto mt-5">
+        <div class="row">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="mb-3">
+                                {% form_file_input_field form.avatar %}
+                                {% form_input_field form.username %}
+                                {% form_input_field form.email %}
+                                {% form_checkbox_field form.is_active %}
+                                {% form_input_field form.password %}
+                                {% form_input_field form.password2 %}
+                                {% button title="Save" glyph_class="fa-solid fa-floppy-disk" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

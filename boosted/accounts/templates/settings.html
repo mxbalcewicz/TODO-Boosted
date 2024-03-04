@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static forms buttons %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/generics/text-colors.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mx-auto mt-5">
+        <div class="row">
+            <div class="bento-box">
+                <div class="row align-items-center">
+                    <div class="col-4 d-flex justify-content-center">
+                        <div class="card" style="max-width: 130px; max-height: 130px;">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}" alt="User Avatar" class="img-thumbnail">
+                            {% else %}
+                                <img src="{% static 'images/blank-profile.webp' %}" alt="Default Avatar" class="img-thumbnail">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col text-end">
+                                Username
+                            </div>
+                            <div class="col">
+                                {{ user.username }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Email
+                            </div>
+                            <div class="col">
+                                {{ user.email }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Account status
+                            </div>
+                            <div class="col {% if user.is_active %} green {% else %} red {% endif %}}}">
+                                {{ user.is_active|yesno:"active,closed"|title }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                Joined
+                            </div>
+                            <div class="col">
+                                {{ user.date_joined|date }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        {% button href='accounts:settings_edit' pk=user.pk title="Edit" color="dark-slate-blue" glyph_class="fa-solid fa-pen" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
