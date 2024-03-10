@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, re_path
 from django.views.generic.base import RedirectView
+from todo import urls as todo_urls
 
 urlpatterns = [
     re_path(r"^$", view=RedirectView.as_view(url="login"), name="root"),
@@ -15,4 +16,5 @@ urlpatterns = [
     re_path(r"^register/$", view=RegisterView.as_view(), name=RegisterView.view_name),
     re_path(r"^dashboard/", include((dashboard_urls, "dashboard"))),
     re_path(r"^accounts/", include((accounts_urls, "accounts"))),
+    re_path(r"^todo/", include((todo_urls, "todo"))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

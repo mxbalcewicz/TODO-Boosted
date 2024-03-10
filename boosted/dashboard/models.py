@@ -8,4 +8,4 @@ class AppLabel(models.Model):
     app_name = models.CharField()
 
     def get_app_url(self):
-        return reverse(f"{self.view_name}:{self.app_name}")
+        return reverse(f"{self.app_name}:{self.view_name}")
