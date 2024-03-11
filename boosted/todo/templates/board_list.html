@@ -8,9 +8,12 @@
 
 <div class="row">
     <div class="col-md-6 mx-auto mt-5">
-        <div class="row justify-content-around">
-            {% bento_box title="Your boards" href="todo:board_list" extra_classes="glass-shine-effect" reverse_url=True %}
-            {% bento_box title="Management" href="todo:todo_management" extra_classes="glass-shine-effect" reverse_url=True %}
+        <div class="row">
+            {% if boards %}
+                {% for board in boards %}
+                    <p>board.name</p>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

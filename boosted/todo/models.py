@@ -18,3 +18,12 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
 
     history = HistoricalRecords()
+
+
+class TaskBoard(models.Model):
+    name = models.CharField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    tasks = models.ManyToManyField(Task)
+    categories = models.ManyToManyField(TaskCategory)
