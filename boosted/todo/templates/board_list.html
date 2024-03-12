@@ -9,11 +9,10 @@
 <div class="row">
     <div class="col-md-6 mx-auto mt-5">
         <div class="row">
-            {% if boards %}
-                {% for board in boards %}
-                    <p>board.name</p>
-                {% endfor %}
-            {% endif %}
+            {% for object in object_list %}
+                {% bento_box title=app.label href=app.get_app_url extra_classes="glass-shine-effect" %}
+            {% endfor %}
+            {% bento_box extra_classes="glass-shine-effect" glyph_class="fa-solid fa-plus" %}
         </div>
     </div>
 </div>

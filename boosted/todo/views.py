@@ -1,9 +1,9 @@
 from typing import Any
 
 from django.db.models.query import QuerySet
-from django.views.generic import ListView, TemplateView
-from todo.forms import TODOFilterForm
-from todo.models import TaskBoard
+from django.views.generic import CreateView, ListView, TemplateView
+from todo.forms import TaskCategoryForm, TaskForm, TODOFilterForm
+from todo.models import Task, TaskBoard, TaskCategory
 from tools.views import BoostedAbstractView
 
 
@@ -47,3 +47,26 @@ class TODOBoardListView(TODOGenericView, ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return self.model.objects.filter()
+
+
+class TaskCreateView(TODOGenericView, CreateView):
+    view_name = "task_create"
+    template_name = "task_create.html"
+    model = Task
+    form_class = TaskForm
+
+
+class CategoryCreateView(TODOGenericView, CreateView):
+    view_name = "category_create"
+    template_name = "category_create.html"
+    model = TaskCategory
+    form_class = TaskCategoryForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    # def get_initial(self) -> dict[str, Any]:
+    #     init = super().get_initial()
+    #     return init

@@ -11,9 +11,6 @@
             <a class="nav-link" href="{% url 'dashboard:dashboard' %}">Dashboard</a>
         </li>
         {% endif %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ github_url }}" target="_blank">Github</a>
-        </li>
         {% if request.user.is_admin %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,6 +23,14 @@
         </li>
         {% endif %}
         {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Apps</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="{% url 'todo:todo_base' %}">TODO</a></li>
+          </ul>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{ request.user.username }}

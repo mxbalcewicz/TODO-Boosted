@@ -12,6 +12,10 @@ class TODOAbstractFilterContextClass:
 class TaskCategoryFilterContext(TODOAbstractFilterContextClass):
     table_headers = ["ID", "Name", "HEX Color", "Actions"]
     field_list = ("pk", "name", "color")
+
+    create_view = "todo:category_create"
+    detail_view = "todo:category_detail"
+
     create_button_name = "Create new category"
 
     @staticmethod
@@ -22,6 +26,10 @@ class TaskCategoryFilterContext(TODOAbstractFilterContextClass):
 class TaskFilterContext(TODOAbstractFilterContextClass):
     table_headers = ["ID", "Name", "Description", "Create date", "Actions"]
     field_list = ("pk", "name", "description", "category__name", "created_at")
+
+    create_view = "todo:task_create"
+    detail_view = "todo:task_detail"
+
     create_button_name = "Create new task"
 
     @staticmethod

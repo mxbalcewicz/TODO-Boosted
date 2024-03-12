@@ -10,6 +10,7 @@ def bento_box(
     href: str = "#",
     colsize: int = 4,
     extra_classes: str = None,
+    glyph_class: str = None,
     reverse_url=False,
 ):
     if reverse_url:
@@ -17,6 +18,7 @@ def bento_box(
     return {
         "title": title,
         "href": href,
+        "glyph_class": glyph_class,
         "colsize": colsize,
         "extra_classes": extra_classes,
     }

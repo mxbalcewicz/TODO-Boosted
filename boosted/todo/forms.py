@@ -36,3 +36,15 @@ class TODOFilterForm(forms.Form):
 
     def get_context_class(self, model):
         return ContextEnum.get_class(model)
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = "__all__"
+
+
+class TaskCategoryForm(forms.ModelForm):
+    class Meta:
+        model = TaskCategory
+        fields = "__all__"

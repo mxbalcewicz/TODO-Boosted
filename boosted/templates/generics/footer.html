@@ -1,3 +1,8 @@
-<footer class="footer fixed-bottom mx-2 my-auto">
-    <p>Boosted {{ version }} {{ release_year}}</p>
+<footer class="footer fixed-bottom mx-2 my-auto d-flex justify-content-between">
+    <div>
+        <p>Boosted {{ version }} {{ release_year}}</p>
+    </div>
+    <div class="mx-3">
+        <a class="py-3" href="{{ github_url }}" target="_blank"><i class="fa-brands fa-github fa-2xl"></i></a>
+    </div>
 </footer>

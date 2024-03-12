@@ -3,6 +3,9 @@
         <div class="bento-box text-center px-2 {{ extra_classes }}">
             <h1>
                 {{ title }}
+                {% if glyph_class %}
+                 <i class="{{ glyph_class }}"></i>
+                {% endif %}
             </h1>
         </div>
     </a>
