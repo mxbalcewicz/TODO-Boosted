@@ -10,9 +10,9 @@
     <div class="col-md-6 mx-auto mt-5">
         <div class="row">
             {% for object in object_list %}
-                {% bento_box title=app.label href=app.get_app_url extra_classes="glass-shine-effect" %}
+                {% bento_box title=object.name href=app.get_app_url extra_classes="glass-shine-effect" %}
             {% endfor %}
-            {% bento_box extra_classes="glass-shine-effect" glyph_class="fa-solid fa-plus" %}
+            {% bento_box extra_classes="glass-shine-effect" form=form glyph_class="fa-solid fa-plus" %}
         </div>
     </div>
 </div>

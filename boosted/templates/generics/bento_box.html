@@ -1,12 +1,24 @@
 <div class="col-md-{{ colsize }} mb-3">
+    {% if not form %}
     <a href="{{ href }}">
+    {% endif %}
         <div class="bento-box text-center px-2 {{ extra_classes }}">
             <h1>
                 {{ title }}
                 {% if glyph_class %}
-                 <i class="{{ glyph_class }}"></i>
+                <i class="{{ glyph_class }}"></i>
+                {% endif %}
+
+                {% if form %}
+                <form method="POST">
+                    {% csrf_token %}
+                {{ form }}
+                <button type="submit">
+                </form>
                 {% endif %}
             </h1>
         </div>
+    {% if not form %}
     </a>
+    {% endif %}
 </div>

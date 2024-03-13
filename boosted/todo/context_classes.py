@@ -24,8 +24,8 @@ class TaskCategoryFilterContext(TODOAbstractFilterContextClass):
 
 
 class TaskFilterContext(TODOAbstractFilterContextClass):
-    table_headers = ["ID", "Name", "Description", "Create date", "Actions"]
-    field_list = ("pk", "name", "description", "category__name", "created_at")
+    table_headers = ["ID", "Name", "Description", "Category", "Create date", "Actions"]
+    field_list = ("pk", "name", "description", "category", "created_at")
 
     create_view = "todo:task_create"
     detail_view = "todo:task_detail"

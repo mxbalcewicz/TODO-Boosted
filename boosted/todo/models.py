@@ -9,6 +9,9 @@ class TaskCategory(models.Model):
     name = models.CharField()
     color = HexColorField()
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     name = models.CharField()
@@ -27,3 +30,7 @@ class TaskBoard(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     tasks = models.ManyToManyField(Task)
     categories = models.ManyToManyField(TaskCategory)
+
+    def get_absolute_url(self):
+        # return reverse("", kwargs={"pk": self.pk}) # TODO: Get detail url
+        pass

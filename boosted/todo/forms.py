@@ -2,7 +2,7 @@ from enum import Enum
 
 from django import forms
 from todo.context_classes import ContextEnum
-from todo.models import Task, TaskCategory
+from todo.models import Task, TaskBoard, TaskCategory
 from tools.form_tools import update_form_styling
 
 
@@ -43,8 +43,32 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
+
 
 class TaskCategoryForm(forms.ModelForm):
     class Meta:
         model = TaskCategory
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(TaskCategoryForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
+
+
+class TaskBoardHiddenForm(forms.ModelForm):
+    class Meta:
+        model = TaskBoard
+        fields = "__all__"
+
+    def __init__(self, user, *args, **kwargs):
+        super(TaskBoardHiddenForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
+        for field in self.fields:
+            self.fields[field].widget = forms.HiddenInput()
+        self.fields["owner"].initial = user
+        self.fields["name"].initial = "Test"
+        for field in ("tasks", "categories"):
+            self.fields[field].required = False

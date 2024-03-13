@@ -1,0 +1,28 @@
+{% load buttons %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row align-items-center justify-content-center">
+        <div class="col-6 bento-box">
+            <div class="title text-center">
+                <h2>{{ title }}</h2>
+            </div>
+
+            {% for field in form.visible_fields %}
+            <div class="row my-3 py-3">
+                <div class="col text-center white fw-bold">{{ field.label }}</div>
+                <div class="col text-center">{{ field }}</div>
+            </div>
+            {% endfor %}
+            
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    {% button title="Back" href=back_url glyph_class="fa-solid fa-left-long" %}
+                </div>
+                <div class="col d-flex justify-content-center">
+                    {% button title="Save" glyph_class="fa-solid fa-pen" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -4,13 +4,8 @@ from accounts.views import AccountsGenericView
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import DeleteView, DetailView, ListView, UpdateView
+from tools.views import GenericCreateView
 
 
 @method_decorator(permission_required("accounts.view_boostedgroup"), name="dispatch")
@@ -52,11 +47,12 @@ class GroupDeleteView(DeleteView, AccountsGenericView):
 
 
 @method_decorator(permission_required("accounts.change_boostedgroup"), name="dispatch")
-class GroupCreateView(CreateView, AccountsGenericView):
+class GroupCreateView(GenericCreateView, AccountsGenericView):
     view_name = "group_create"
     model = BoostedGroup
     form_class = BoostedGroupForm
-    template_name = "group_create.html"
+    form_title = "New group"
+    back_url = "accounts:group_list"
 
     def get_success_url(self) -> str:
         return reverse(GroupDetailView.get_view_name(), args=[self.object.pk])
