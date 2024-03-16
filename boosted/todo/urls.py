@@ -3,8 +3,11 @@ from todo.views import (
     CategoryCreateView,
     CategoryDetailView,
     TaskBoardCreateView,
+    TaskBoardDeleteView,
     TaskBoardDetailView,
+    TaskCategoryDeleteView,
     TaskCreateView,
+    TaskDeleteView,
     TaskDetailView,
     TODOBaseView,
     TODOBoardListView,
@@ -31,6 +34,21 @@ urlpatterns = [
     ),
     re_path(
         r"^task/(?P<pk>\d+)/$", TaskDetailView.as_view(), name=TaskDetailView.view_name
+    ),
+    re_path(
+        r"^board/(?P<pk>\d+)/delete/$",
+        TaskBoardDeleteView.as_view(),
+        name=TaskBoardDeleteView.view_name,
+    ),
+    re_path(
+        r"^category/(?P<pk>\d+)/delete/$",
+        TaskCategoryDeleteView.as_view(),
+        name=TaskCategoryDeleteView.view_name,
+    ),
+    re_path(
+        r"^task/(?P<pk>\d+)/delete/$",
+        TaskDeleteView.as_view(),
+        name=TaskDeleteView.view_name,
     ),
     re_path(
         r"^board/(?P<pk>\d+)/$",

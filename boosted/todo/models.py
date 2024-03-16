@@ -39,6 +39,9 @@ class TaskBoard(models.Model):
     def tasks_count(self):
         return self.tasks.count()
 
+    # def __str__(self):
+    #     return self.name
+
     def get_absolute_url(self):
         from todo.views import TaskBoardDetailView
 

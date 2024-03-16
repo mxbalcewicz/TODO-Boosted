@@ -6,8 +6,8 @@ from todo.models import Task, TaskBoard, TaskCategory
 class TODOAbstractFilterContextClass:
     table_headers = None
     field_list = None
-    create_view = None
-    detail_view = None
+    create_url = None
+    detail_url = None
     create_button_name = None
 
 
@@ -15,8 +15,8 @@ class TaskCategoryFilterContext(TODOAbstractFilterContextClass):
     table_headers = ("ID", "Name", "HEX Color", "Actions")
     field_list = ("pk", "name", "color")
 
-    create_view = "todo:category_create"
-    detail_view = "todo:category_detail"
+    create_url = "todo:category_create"
+    detail_url = "todo:category_detail"
 
     create_button_name = "Create new category"
 
@@ -29,8 +29,8 @@ class TaskFilterContext(TODOAbstractFilterContextClass):
     table_headers = ("ID", "Name", "Description", "Category", "Create date", "Actions")
     field_list = ("pk", "name", "description", "category", "created_at")
 
-    create_view = "todo:task_create"
-    detail_view = "todo:task_detail"
+    create_url = "todo:task_create"
+    detail_url = "todo:task_detail"
 
     create_button_name = "Create new task"
 
@@ -43,8 +43,8 @@ class TaskBoardFilterContext(TODOAbstractFilterContextClass):
     table_headers = ("ID", "Name", "Tasks", "Create date", "Actions")
     field_list = ("pk", "name", "tasks_count", "created_at")
 
-    create_view = "todo:board_create"
-    detail_view = "todo:board_detail"
+    create_url = "todo:board_create"
+    detail_url = "todo:board_detail"
 
     create_button_name = "Create new board"
 

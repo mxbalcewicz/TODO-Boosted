@@ -70,7 +70,7 @@ class TaskBoardHiddenForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget = forms.HiddenInput()
         self.fields["owner"].initial = user
-        self.fields["name"].initial = "Test"
+        self.fields["name"].initial = "New board"
         for field in ("tasks", "categories"):
             self.fields[field].required = False
 

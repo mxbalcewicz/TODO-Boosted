@@ -33,7 +33,7 @@
                         <td>{{ object|get_attribute:field }}</td>
                         {% endfor %}
                         <td>
-                            {% button title="Details" href=context.detail_view pk=user.pk glyph_class="fa-regular fa-rectangle-list" %}
+                            {% button title="Details" href=context.detail_url pk=object.pk glyph_class="fa-regular fa-rectangle-list" %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -47,7 +47,7 @@
 {% if context %}
 <div class="row my-3">
     <div class="col d-flex justify-content-center">
-        {% button title=context.create_button_name href=context.create_view glyph_class="fa-solid fa-circle-plus" %}
+        {% button title=context.create_button_name href=context.create_url glyph_class="fa-solid fa-circle-plus" %}
     </div>
 </div>
 {% endif %}

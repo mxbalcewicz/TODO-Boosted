@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views.generic import FormView, ListView, TemplateView
+from django.views.generic import DeleteView, FormView, ListView, TemplateView
 from todo.forms import (
     TaskBoardForm,
     TaskBoardHiddenForm,
@@ -120,6 +120,7 @@ class TaskDetailView(
     view_name = "task_detail"
     model = Task
     list_url = "todo:todo_management"
+    delete_url = "todo:task_delete"
     field_lookup_map = {
         "ID": "pk",
         "Name": "name",
@@ -151,6 +152,7 @@ class CategoryDetailView(
     view_name = "category_detail"
     model = TaskCategory
     list_url = "todo:todo_management"
+    delete_url = "todo:category_delete"
     field_lookup_map = {"ID": "pk", "Name": "name", "Color": "color"}
 
     def get_context_data(self, **kwargs):
@@ -165,12 +167,34 @@ class TaskBoardDetailView(
     view_name = "board_detail"
     model = TaskBoard
     list_url = "todo:todo_management"
-    field_lookup_map = {
-        "ID": "pk",
-        "Name": "name",
-    }
+    delete_url = "todo:board_delete"
+    field_lookup_map = {"ID": "pk", "Name": "name", "Tasks": "tasks"}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["query_params"] = self.get_query_params()
         return context
+
+
+class TaskBoardDeleteView(TODOGenericView, DeleteView):
+    view_name = "board_delete"
+    model = TaskBoard
+
+    def get_success_url(self) -> str:
+        return reverse(TODOManagementView.get_view_name()) + "?model=Board"
+
+
+class TaskDeleteView(TODOGenericView, DeleteView):
+    view_name = "task_delete"
+    model = Task
+
+    def get_success_url(self) -> str:
+        return reverse(TODOManagementView.get_view_name()) + "?model=Task"
+
+
+class TaskCategoryDeleteView(TODOGenericView, DeleteView):
+    view_name = "category_delete"
+    model = TaskCategory
+
+    def get_success_url(self) -> str:
+        return reverse(TODOManagementView.get_view_name()) + "?model=Category"
