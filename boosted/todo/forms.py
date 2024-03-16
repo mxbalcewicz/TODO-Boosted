@@ -10,6 +10,7 @@ class TODOFilterForm(forms.Form):
     class ModelsChoices(Enum):
         CATEGORY = "Category"
         TASK = "Task"
+        BOARD = "Board"
 
     model = forms.ChoiceField(
         choices=[(choice.value, choice.value) for choice in ModelsChoices]
@@ -32,7 +33,7 @@ class TODOFilterForm(forms.Form):
         return queryset
 
     def get_model_class(self, choice):
-        return {"Category": TaskCategory, "Task": Task}[choice]
+        return {"Category": TaskCategory, "Task": Task, "Board": TaskBoard}[choice]
 
     def get_context_class(self, model):
         return ContextEnum.get_class(model)
@@ -72,3 +73,15 @@ class TaskBoardHiddenForm(forms.ModelForm):
         self.fields["name"].initial = "Test"
         for field in ("tasks", "categories"):
             self.fields[field].required = False
+
+
+class TaskBoardForm(forms.ModelForm):
+    class Meta:
+        model = TaskBoard
+        fields = "__all__"
+
+    def __init__(self, user, *args, **kwargs):
+        super(TaskBoardForm, self).__init__(*args, **kwargs)
+        update_form_styling(self)
+        self.fields["owner"].initial = user
+        self.fields["owner"].widget = forms.HiddenInput()

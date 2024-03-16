@@ -1,8 +1,6 @@
-from typing import Any
-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, DetailView, View
 
 
 class BoostedAbstractView(View):
@@ -19,10 +17,26 @@ class BoostedAbstractView(View):
 class GenericCreateView(CreateView):
     template_name = "generic_create.html"
     form_title = None
-    back_url = None
+    list_url = None
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form_title"] = self.form_title
-        context["back_url"] = self.back_url
+        context["list_url"] = self.list_url
+        return context
+
+
+class GenericDetailView(DetailView):
+    template_name = "generic_detail.html"
+    field_lookup_map = {}
+    list_url = None
+    edit_url = None
+    delete_url = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["field_lookup_map"] = self.field_lookup_map
+        context["list_url"] = self.list_url
+        context["edit_url"] = self.edit_url
+        context["delete_url"] = self.delete_url
         return context

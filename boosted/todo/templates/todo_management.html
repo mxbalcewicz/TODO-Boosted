@@ -19,7 +19,6 @@
     <div class="col-10">
         <div class="row">
             <table class="table rounded-4 overflow-hidden table-responsive table-striped table-dark">
-                <caption class="styled">Users management panel</caption>
                 <thead>
                     <tr>
                         {% for header in context.table_headers %}
@@ -34,7 +33,7 @@
                         <td>{{ object|get_attribute:field }}</td>
                         {% endfor %}
                         <td>
-                            {% comment %} {% button title="Details" href="accounts:user_detail" pk=user.pk glyph_class="fa-regular fa-rectangle-list" %} {% endcomment %}
+                            {% button title="Details" href=context.detail_view pk=user.pk glyph_class="fa-regular fa-rectangle-list" %}
                         </td>
                     </tr>
                 {% endfor %}

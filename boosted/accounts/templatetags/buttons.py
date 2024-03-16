@@ -14,10 +14,12 @@ def button(
     glyph_class: str = None,
     onclick: str = None,
     extra_classes: str = None,
+    *args,
+    **kwargs
 ):
-    if pk is not None:
+    if href and pk is not None:
         href = reverse(href, kwargs={"pk": pk})
-    else:
+    elif href:
         href = reverse(href) if href else None
     return {
         "title": title,
@@ -27,4 +29,5 @@ def button(
         "glyph_class": glyph_class,
         "onclick": onclick,
         "extra_classes": extra_classes,
+        "extra_kwargs": kwargs,
     }

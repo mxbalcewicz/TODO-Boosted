@@ -3,13 +3,18 @@ from typing import Any
 from django.urls import reverse
 from django.views.generic import FormView, ListView, TemplateView
 from todo.forms import (
+    TaskBoardForm,
     TaskBoardHiddenForm,
     TaskCategoryForm,
     TaskForm,
     TODOFilterForm,
 )
-from todo.models import TaskBoard
-from tools.views import BoostedAbstractView, GenericCreateView
+from todo.models import Task, TaskBoard, TaskCategory
+from tools.views import (
+    BoostedAbstractView,
+    GenericCreateView,
+    GenericDetailView,
+)
 
 
 class TODOGenericView(BoostedAbstractView):
@@ -71,26 +76,68 @@ class TODOBoardListView(TODOGenericView, FormView):
         form.save()
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        return response
-
 
 class TaskCreateView(TODOGenericView, GenericCreateView):
     view_name = "task_create"
     form_class = TaskForm
     form_title = "New task"
-    back_url = "todo:todo_management"
+    list_url = "todo:todo_management"
 
     def get_success_url(self) -> str:
         return reverse(TODOManagementView.get_view_name() + "?model=Task")
+
+
+class TaskBoardCreateView(TODOGenericView, GenericCreateView):
+    view_name = "board_create"
+    form_class = TaskBoardForm
+    form_title = "New task board"
+    list_url = "todo:todo_management"
+
+    def get_success_url(self) -> str:
+        return reverse(TODOManagementView.get_view_name() + "?model=Board")
+
+    def get_form_kwargs(self) -> dict[str, Any]:
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+
+class TaskDetailView(TODOGenericView, GenericDetailView):
+    view_name = "task_detail"
+    model = Task
+    list_url = "todo:todo_management"
+    field_lookup_map = {
+        "ID": "pk",
+        "Name": "name",
+        "Description": "description",
+        "Category": "category__name",
+        "Created at": "created_at",
+        "Completed": "completed",
+    }
 
 
 class CategoryCreateView(TODOGenericView, GenericCreateView):
     view_name = "category_create"
     form_class = TaskCategoryForm
     form_title = "New task category"
-    back_url = "todo:todo_management"
+    list_url = "todo:todo_management"
 
     def get_success_url(self) -> str:
         return reverse(TODOManagementView.get_view_name() + "?model=Category")
+
+
+class CategoryDetailView(TODOGenericView, GenericDetailView):
+    view_name = "category_detail"
+    model = TaskCategory
+    list_url = "todo:todo_management"
+    field_lookup_map = {"ID": "pk", "Name": "name", "Color": "color"}
+
+
+class TaskBoardDetailView(TODOGenericView, GenericDetailView):
+    view_name = "board_detail"
+    model = TaskBoard
+    list_url = "todo:todo_management"
+    field_lookup_map = {
+        "ID": "pk",
+        "Name": "name",
+    }

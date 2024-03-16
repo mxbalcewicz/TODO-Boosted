@@ -1,7 +1,11 @@
 from django.urls import re_path
 from todo.views import (
     CategoryCreateView,
+    CategoryDetailView,
+    TaskBoardCreateView,
+    TaskBoardDetailView,
     TaskCreateView,
+    TaskDetailView,
     TODOBaseView,
     TODOBoardListView,
     TODOManagementView,
@@ -9,11 +13,29 @@ from todo.views import (
 
 urlpatterns = [
     re_path(r"^$", TODOBaseView.as_view(), name=TODOBaseView.view_name),
-    re_path(r"^new_task$", TaskCreateView.as_view(), name=TaskCreateView.view_name),
+    re_path(r"^task/new$", TaskCreateView.as_view(), name=TaskCreateView.view_name),
     re_path(
-        r"^new_category$",
+        r"^category/new$",
         CategoryCreateView.as_view(),
         name=CategoryCreateView.view_name,
+    ),
+    re_path(
+        r"^board/new$",
+        TaskBoardCreateView.as_view(),
+        name=TaskBoardCreateView.view_name,
+    ),
+    re_path(
+        r"^category/(?P<pk>\d+)/$",
+        CategoryDetailView.as_view(),
+        name=CategoryDetailView.view_name,
+    ),
+    re_path(
+        r"^task/(?P<pk>\d+)/$", TaskDetailView.as_view(), name=TaskDetailView.view_name
+    ),
+    re_path(
+        r"^board/(?P<pk>\d+)/$",
+        TaskBoardDetailView.as_view(),
+        name=TaskBoardDetailView.view_name,
     ),
     re_path(
         r"^boards/$", TODOBoardListView.as_view(), name=TODOBoardListView.view_name

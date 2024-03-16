@@ -5,17 +5,23 @@
         <div class="bento-box text-center px-2 {{ extra_classes }}">
             <h1>
                 {{ title }}
-                {% if glyph_class %}
-                <i class="{{ glyph_class }}"></i>
-                {% endif %}
 
                 {% if form %}
                 <form method="POST">
                     {% csrf_token %}
                 {{ form }}
-                <button type="submit">
-                </form>
+                <button type="submit" class="hidden_button">
+                {% if glyph_class %}
+                    <i class="{{ glyph_class }}"></i>
                 {% endif %}
+                </button>
+                </form>
+                {% else %}
+                {% if glyph_class %}
+                    <i class="{{ glyph_class }}"></i>
+                {% endif %}
+                {% endif %}
+
             </h1>
         </div>
     {% if not form %}

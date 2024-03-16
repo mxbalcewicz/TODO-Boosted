@@ -1,5 +1,6 @@
 from accounts.models import User
 from django.db import models
+from django.urls import reverse
 from simple_history.models import HistoricalRecords
 from tools.models import HexColorField
 
@@ -31,6 +32,11 @@ class TaskBoard(models.Model):
     tasks = models.ManyToManyField(Task)
     categories = models.ManyToManyField(TaskCategory)
 
+    @property
+    def tasks_count(self):
+        return self.tasks.count()
+
     def get_absolute_url(self):
-        # return reverse("", kwargs={"pk": self.pk}) # TODO: Get detail url
-        pass
+        from todo.views import TaskBoardDetailView
+
+        return reverse(TaskBoardDetailView.get_view_name(), kwargs={"pk": self.pk})

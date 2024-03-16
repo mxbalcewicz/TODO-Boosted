@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
-{% load static forms divs %}
+{% load static forms divs buttons %}
 
 {% block content %}
-
-{% generic_form title=form_title form=form back_url=back_url %}
-
+<div class="row align-items-center justify-content-center">
+    <div class="col-6 bento-box">
+        {% generic_form title=form_title form=form id="create_form" %}
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                {% button title="Back" href=list_url glyph_class="fa-solid fa-left-long" %}
+            </div>
+            <div class="col d-flex justify-content-center">
+                {% button title="Save" glyph_class="fa-solid fa-pen" form="create_form" %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -9,5 +9,5 @@ def filter_form(title: str, form):
 
 
 @register.inclusion_tag("generic_form.html")
-def generic_form(title: str, form, back_url: str):
-    return {"title": title, "form": form, "back_url": back_url}
+def generic_form(title: str, form, id: str = None):
+    return {"title": title, "form": form, "id": id}

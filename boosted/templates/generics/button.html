@@ -1,14 +1,14 @@
 {% load static %}
 
 {% if href %}
-<a href="{{ href }}" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
+<a href="{{ href }}" {% for key, value in extra_kwargs.items %}{{ key }}="{{ value }}" {% endfor %} class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
     {% if glyph_class %}
     <i class="{{ glyph_class }}"></i>
     {% endif %}
     {{ title }}
 </a>
 {% else %}
-<button type="submit" class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
+<button type="submit" {% for key, value in extra_kwargs.items %}{{ key }}="{{ value }}" {% endfor %} class="btn btn-{{ size }} bg-{{ color }}" class="{{ extra_classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
     {% if glyph_class %}
     <i class="{{ glyph_class }}"></i>
     {% endif %}

@@ -52,7 +52,7 @@ class GroupCreateView(GenericCreateView, AccountsGenericView):
     model = BoostedGroup
     form_class = BoostedGroupForm
     form_title = "New group"
-    back_url = "accounts:group_list"
+    list_url = "accounts:group_list"
 
     def get_success_url(self) -> str:
         return reverse(GroupDetailView.get_view_name(), args=[self.object.pk])
