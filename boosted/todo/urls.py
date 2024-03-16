@@ -1,26 +1,25 @@
 from django.urls import re_path
-from todo.views import (
-    CategoryCreateView,
-    CategoryDetailView,
+from todo.views.board import (
     TaskBoardCreateView,
     TaskBoardDeleteView,
     TaskBoardDetailView,
-    TaskCategoryDeleteView,
-    TaskCreateView,
-    TaskDeleteView,
-    TaskDetailView,
-    TODOBaseView,
-    TODOBoardListView,
-    TODOManagementView,
+    TaskBoardListView,
 )
+from todo.views.category import (
+    TaskCategoryCreateView,
+    TaskCategoryDeleteView,
+    TaskCategoryDetailView,
+)
+from todo.views.management import TODOBaseView, TODOManagementView
+from todo.views.task import TaskCreateView, TaskDeleteView, TaskDetailView
 
 urlpatterns = [
     re_path(r"^$", TODOBaseView.as_view(), name=TODOBaseView.view_name),
     re_path(r"^task/new$", TaskCreateView.as_view(), name=TaskCreateView.view_name),
     re_path(
         r"^category/new$",
-        CategoryCreateView.as_view(),
-        name=CategoryCreateView.view_name,
+        TaskCategoryCreateView.as_view(),
+        name=TaskCategoryCreateView.view_name,
     ),
     re_path(
         r"^board/new$",
@@ -29,8 +28,8 @@ urlpatterns = [
     ),
     re_path(
         r"^category/(?P<pk>\d+)/$",
-        CategoryDetailView.as_view(),
-        name=CategoryDetailView.view_name,
+        TaskCategoryDetailView.as_view(),
+        name=TaskCategoryDetailView.view_name,
     ),
     re_path(
         r"^task/(?P<pk>\d+)/$", TaskDetailView.as_view(), name=TaskDetailView.view_name
@@ -56,7 +55,7 @@ urlpatterns = [
         name=TaskBoardDetailView.view_name,
     ),
     re_path(
-        r"^boards/$", TODOBoardListView.as_view(), name=TODOBoardListView.view_name
+        r"^boards/$", TaskBoardListView.as_view(), name=TaskBoardListView.view_name
     ),
     re_path(
         r"management/", TODOManagementView.as_view(), name=TODOManagementView.view_name
