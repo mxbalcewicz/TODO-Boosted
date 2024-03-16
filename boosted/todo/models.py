@@ -23,6 +23,9 @@ class Task(models.Model):
 
     history = HistoricalRecords()
 
+    def __str__(self):
+        return self.name
+
 
 class TaskBoard(models.Model):
     name = models.CharField()

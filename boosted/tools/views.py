@@ -14,6 +14,19 @@ class BoostedAbstractView(View):
         return f"{cls.app_name}:{cls.view_name}"
 
 
+class GenericQueryParamsMixin:
+    param_key = None
+
+    def save_query_params_to_session(self, data):
+        self.request.session[self.param_key] = data
+
+    def get_query_params(self):
+        return self.request.session.get(self.param_key, "")
+
+    def make_query_params(self):
+        raise Exception("Method not implemented.")
+
+
 class GenericCreateView(CreateView):
     template_name = "generic_create.html"
     form_title = None

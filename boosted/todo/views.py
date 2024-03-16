@@ -1,5 +1,3 @@
-from typing import Any
-
 from django.urls import reverse
 from django.views.generic import FormView, ListView, TemplateView
 from todo.forms import (
@@ -14,6 +12,7 @@ from tools.views import (
     BoostedAbstractView,
     GenericCreateView,
     GenericDetailView,
+    GenericQueryParamsMixin,
 )
 
 
@@ -26,7 +25,17 @@ class TODOBaseView(TODOGenericView, TemplateView):
     template_name = "todo_base.html"
 
 
-class TODOManagementView(TODOGenericView, ListView):
+class TODOManagementViewQueryParamsMixin(GenericQueryParamsMixin):
+    param_key = "todo:todo_management"
+
+    def make_query_params(self, form_data):
+        params = "?"
+        for key, value in form_data.items():
+            params += f"{key}={value}"
+        return params
+
+
+class TODOManagementView(TODOGenericView, ListView, TODOManagementViewQueryParamsMixin):
     view_name = "todo_management"
     template_name = "todo_management.html"
     form_class = TODOFilterForm
@@ -34,7 +43,7 @@ class TODOManagementView(TODOGenericView, ListView):
     def get_filter_form(self, **kwargs):
         return self.form_class(data=self.request.GET or None, **kwargs)
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if not self.filter_form:
             self.filter_form = self.get_filter_form(**self.get_form_kwargs())
@@ -44,6 +53,9 @@ class TODOManagementView(TODOGenericView, ListView):
 
     def get_queryset(self):
         self.filter_form = self.get_filter_form(**self.get_form_kwargs())
+        if self.filter_form.is_valid():
+            params = self.make_query_params(self.filter_form.cleaned_data)
+            self.save_query_params_to_session(params)
         return self.filter_form.get_queryset()
 
     def get_form_kwargs(self):
@@ -56,7 +68,7 @@ class TODOBoardListView(TODOGenericView, FormView):
     model = TaskBoard
     form_class = TaskBoardHiddenForm
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = self.get_queryset()
         return context
@@ -64,12 +76,12 @@ class TODOBoardListView(TODOGenericView, FormView):
     def get_queryset(self):
         return self.model.objects.filter(owner=self.request.user)
 
-    def get_form_kwargs(self) -> dict[str, Any]:
+    def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
 
-    def get_success_url(self) -> str:
+    def get_success_url(self):
         return reverse(self.get_view_name())
 
     def form_valid(self, form):
@@ -83,7 +95,7 @@ class TaskCreateView(TODOGenericView, GenericCreateView):
     form_title = "New task"
     list_url = "todo:todo_management"
 
-    def get_success_url(self) -> str:
+    def get_success_url(self):
         return reverse(TODOManagementView.get_view_name() + "?model=Task")
 
 
@@ -93,16 +105,18 @@ class TaskBoardCreateView(TODOGenericView, GenericCreateView):
     form_title = "New task board"
     list_url = "todo:todo_management"
 
-    def get_success_url(self) -> str:
+    def get_success_url(self):
         return reverse(TODOManagementView.get_view_name() + "?model=Board")
 
-    def get_form_kwargs(self) -> dict[str, Any]:
+    def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
 
 
-class TaskDetailView(TODOGenericView, GenericDetailView):
+class TaskDetailView(
+    TODOGenericView, GenericDetailView, TODOManagementViewQueryParamsMixin
+):
     view_name = "task_detail"
     model = Task
     list_url = "todo:todo_management"
@@ -115,6 +129,11 @@ class TaskDetailView(TODOGenericView, GenericDetailView):
         "Completed": "completed",
     }
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query_params"] = self.get_query_params()
+        return context
+
 
 class CategoryCreateView(TODOGenericView, GenericCreateView):
     view_name = "category_create"
@@ -122,18 +141,27 @@ class CategoryCreateView(TODOGenericView, GenericCreateView):
     form_title = "New task category"
     list_url = "todo:todo_management"
 
-    def get_success_url(self) -> str:
+    def get_success_url(self):
         return reverse(TODOManagementView.get_view_name() + "?model=Category")
 
 
-class CategoryDetailView(TODOGenericView, GenericDetailView):
+class CategoryDetailView(
+    TODOGenericView, GenericDetailView, TODOManagementViewQueryParamsMixin
+):
     view_name = "category_detail"
     model = TaskCategory
     list_url = "todo:todo_management"
     field_lookup_map = {"ID": "pk", "Name": "name", "Color": "color"}
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query_params"] = self.get_query_params()
+        return context
 
-class TaskBoardDetailView(TODOGenericView, GenericDetailView):
+
+class TaskBoardDetailView(
+    TODOGenericView, GenericDetailView, TODOManagementViewQueryParamsMixin
+):
     view_name = "board_detail"
     model = TaskBoard
     list_url = "todo:todo_management"
@@ -141,3 +169,8 @@ class TaskBoardDetailView(TODOGenericView, GenericDetailView):
         "ID": "pk",
         "Name": "name",
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query_params"] = self.get_query_params()
+        return context

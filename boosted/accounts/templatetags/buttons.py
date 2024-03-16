@@ -21,6 +21,9 @@ def button(
         href = reverse(href, kwargs={"pk": pk})
     elif href:
         href = reverse(href) if href else None
+    query_params = kwargs.get("query_params")
+    if query_params and href:
+        href += query_params
     return {
         "title": title,
         "href": href,
